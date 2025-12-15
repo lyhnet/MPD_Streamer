@@ -1,11 +1,14 @@
 import requests
 import re
+from dotenv import load_dotenv
+import os
 
-TVH_M3U_URL = "http://kodi.lyhnemail.com:19981/playlist/channels.m3u"
-EPG_URL = "https://kodi.lyhnemail.com/epg.xml"
+load_dotenv()  # loads .env
+
+TVH_M3U_URL = os.getenv("TVH_M3U_URL")
+EPG_URL = os.getenv("XMLTV")
 OUTPUT = "streamer.m3u"
-
-STREAM_BASE = "https://kodi.lyhnemail.com/streamer/stream/"
+STREAM_BASE =  os.getenv("baseURL") 
 
 def select_stream_format():
     while True:

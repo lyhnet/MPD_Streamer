@@ -9,6 +9,10 @@ import os
 import time
 import threading
 from fastapi import Request
+from dotenv import load_dotenv
+
+load_dotenv()  # loads .env
+
 
 app = FastAPI(root_path="/streamer")
 
@@ -19,7 +23,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-baseURL = "https://kodi.lyhnemail.com/streamer/stream"
+
 STREAM_DIR = "/tmp/ramdrive/stream"
 processes = {}          # channel → Popen
 last_access = {}        # channel → timestamp
@@ -29,8 +33,10 @@ flagged_clients = {}    # (client_id, uuid) => timed out client : kicked due to 
 MIN_FREE_BYTES=200000000
 
 MPD=True
-kodiURL="http://kodi.lyhnemail.com"
-kodiPort="19981"
+TVHURL=os.getenv("TVHURL")
+TVHPort=os.getenv("TVHPort")
+baseURL = os.getenv("baseURL")
+
 
 UseGlobalCleaner=True
 InactivityTimeOut=20
@@ -76,7 +82,7 @@ def start_channel_hls(uuid):
     if not base.endswith("/"):
        base += "/"
 
-    streamURL= f"{kodiURL.rstrip('/')}:{kodiPort}/stream/channelid/{uuid}?profile=pass"
+    streamURL= f"{TVHURL.rstrip('/')}:{TVHPort}/stream/channelid/{uuid}?profile=pass"
 
     cmd = [
     "ffmpeg",
@@ -181,7 +187,7 @@ def start_channel_mpd(uuid):
     for f in os.listdir(out_dir):
         os.remove(os.path.join(out_dir, f))
 
-    streamURL= f"{kodiURL.rstrip('/')}:{kodiPort}/stream/channelid/{uuid}?profile=pass"
+    streamURL= f"{TVHURL.rstrip('/')}:{TVHPort}/stream/channelid/{uuid}?profile=pass"
 
     # FFmpeg LIVE DASH command
     cmd = [

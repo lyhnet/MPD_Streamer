@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
 from fastapi.responses import FileResponse
 import xml.etree.ElementTree as ET
 from fastapi import HTTPException, Response
@@ -10,8 +10,23 @@ import time
 import threading
 from fastapi import Request
 from dotenv import load_dotenv
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import JSONResponse
+
+import logging
+
+# Configure logger
+logging.basicConfig(
+    level=logging.INFO,  # default level
+    format="%(asctime)s [%(levelname)s] %(message)s"
+)
+
+
+logger = logging.getLogger("myapp")
+
 
 load_dotenv()  # loads .env
+logger.info("Loaded .env file")
 
 
 app = FastAPI(root_path="/streamer")
@@ -24,14 +39,26 @@ app.add_middleware(
 )
 
 
+
+# Dummy authentication
+USERS = {"crap@lyhnemail.com": "rBeef7D7CHbjb1"}
+
+# Example channel list
+CHANNELS = [
+    {"name": "DR1", "stream_url": "http://tvheadend:19981/stream/channel1"},
+    {"name": "DR2", "stream_url": "http://tvheadend:19981/stream/channel2"},
+]
+
+
+
 STREAM_DIR = "/tmp/ramdrive/stream"
 processes = {}          # channel → Popen
 last_access = {}        # channel → timestamp
-sessions = {}           # (client_id, uuid) -> timestamp of last killed stream
+sessions = {}           # (client_id, uuid) -> [timestamp of last killed stream, ua]
 flagged_clients = {}    # (client_id, uuid) => timed out client : kicked due to no segment request
 
-MIN_FREE_BYTES=200000000
 
+MIN_FREE_BYTES=200000000
 MPD=True
 TVHURL=os.getenv("TVHURL")
 TVHPort=os.getenv("TVHPort")
@@ -62,122 +89,10 @@ def start_background_tasks():
   # Start the activity monitor
   threading.Thread(target=monitor_inactivity, daemon=True).start()
 
-
-def start_channel_hls(uuid):
-    out_dir = f"{STREAM_DIR}/{uuid}"
-    #print("Creating directory:", out_dir)
-    #os.makedirs(out_dir, exist_ok=True)
-
-    # Start a cleanup thread for this channel
-    if not UseGlobalCleaner:
-      threading.Thread(target=cleanup_worker, args=(uuid,), daemon=True).start()
-
-
-    # Clean directory
-    for f in os.listdir(out_dir):
-        os.remove(os.path.join(out_dir, f))
-
-    base = PlaylistURL(uuid)
-    #ensure trailing / for -hls to behave
-    if not base.endswith("/"):
-       base += "/"
-
-    streamURL= f"{TVHURL.rstrip('/')}:{TVHPort}/stream/channelid/{uuid}?profile=pass"
-
-    cmd = [
-    "ffmpeg",
-    "-loglevel", "warning",
-    "-stats",
-    "-fflags", "+discardcorrupt+genpts+igndts",
-    "-err_detect", "ignore_err",
-    "-max_interleave_delta", "0",
-    "-probesize", "10M",
-    "-analyzeduration", "10M",
-
-    "-i", f"{streamURL}",
-
-    # Re-encode section, high quality
-    "-sn",
-    "-map", "0:v:0",
-    "-map", "0:a:0",
-    "-map", "-0:s",
-    "-vf", "scale=-1:720",
-    #"-vf", "yadif=1,scale=-1:720",
-    #"-vf", "bwdif=mode=0:parity=auto,scale=-1:720",
-    "-pix_fmt", "yuv420p",
-    "-c:v", "libx264",
-    "-tune", "zerolatency",
-    "-x264opts", "keyint=48:min-keyint=1:scenecut=0",
-    "-profile:v", "high",
-    "-level", "5.1",
-    "-preset", "veryfast",
-    "-crf", "21",
-    "-maxrate", "6000k",
-    "-bufsize", "6000k",
-
-    "-c:a", "aac",
-    "-ac", "2",
-    "-ar", "48000",
-    "-b:a", "128k",
-    "-g", "100",
-    "-keyint_min", "100",
-
-    "-f", "hls",
-    "-hls_time", "2",
-    "-hls_list_size", "20",
-    "-hls_flags", "independent_segments+delete_segments+program_date_time",
-    "-hls_segment_type", "mpegts",
-    "-hls_segment_filename", f"{out_dir}/hq_segment-%05d.ts",
-    "-hls_base_url", base,
-    f"{out_dir}/copy_index.m3u8",
-
-
-
-    # Re-encode section, low quality
-    "-sn",
-    "-map", "0:v:0",
-    "-map", "0:a:0",
-    "-map", "-0:s",
-
-    "-vf", "yadif=1,scale=-1:720",
-    "-pix_fmt", "yuv420p",
-    "-c:v", "libx264",
-    "-profile:v", "high",
-    "-level", "5.1",
-    "-preset", "ultrafast",
-    "-crf", "23",
-    "-maxrate", "3000k",
-    "-bufsize", "6000k",
-
-    "-c:a", "aac",
-    "-ac", "2",
-    "-ar", "48000",
-    "-b:a", "128k",
-    "-g", "100",
-    "-keyint_min", "100",
-
-    "-f", "hls",
-    "-hls_time", "2",
-    "-hls_list_size", "20",
-    "-hls_flags", "independent_segments+delete_segments+program_date_time",
-    "-hls_segment_type", "mpegts",
-    "-hls_segment_filename", f"{out_dir}/lq_segment-%05d.ts",
-    "-hls_base_url", base,
-    f"{out_dir}/reenc_index.m3u8"
-#  "-force_key_frames", "expr:gte(t,n_forced*1)",
-#    "-muxdelay", "0",
-#    "-muxpreload", "0",
-         #"-hls_flags", "append_list+omit_endlist",
-# "-hls_base_url", base,
-    ]
-
-    print("Starting FFmpeg:", " ".join(cmd))
-    return subprocess.Popen(cmd)
-
-
 def start_channel_mpd(uuid):
     out_dir = f"{STREAM_DIR}/{uuid}"
     os.makedirs(out_dir, exist_ok=True)
+    logger.debug(f"Creating directory: {out_dir}")
 
     # Start a cleanup thread for this channel
     if not UseGlobalCleaner:
@@ -195,6 +110,7 @@ def start_channel_mpd(uuid):
         "-loglevel", "warning",
         "-stats",
         "-fflags", "+discardcorrupt+genpts+igndts",
+        "-avoid_negative_ts", "make_zero",
         "-err_detect", "ignore_err",
         "-max_interleave_delta", "0",
         "-probesize", "10M",
@@ -219,9 +135,11 @@ def start_channel_mpd(uuid):
         "-crf", "21",
         "-maxrate", "6000k",
         "-bufsize", "6000k",
+        "-vsync", "cfr",
 
         # Audio encoding
         "-c:a", "aac",
+        "-af", "aresample=async=1:first_pts=0",
         "-ac", "2",
         "-ar", "48000",
         "-b:a", "128k",
@@ -233,7 +151,7 @@ def start_channel_mpd(uuid):
         "-window_size", "2000", #time shift number of segments.
         "-extra_window_size", "0", #delete older segments
         "-init_seg_name", f"{MPD_InitSegName}--$RepresentationID$.m4s",
-        "-media_seg_name", f"{MPD_ChunkName}-$RepresentationID$-$Number$.m4s",
+        "-media_seg_name", f"{MPD_ChunkName}-$RepresentationID$-$Number%03d$.m4s",
         "-seg_duration", "2",
         "-use_template", "1",
         "-use_timeline", "1",
@@ -242,50 +160,24 @@ def start_channel_mpd(uuid):
         f"{out_dir}/{MPD_Manifest}"
     ]
 
-    print("Starting FFmpeg:", " ".join(cmd))
+    logger.info(f"Starting FFmpeg: {' '.join(cmd)}")
     return subprocess.Popen(cmd)
-
-@app.get("/stream/{uuid}/index.m3u8")
-def serve_manifest_hls(uuid: str):
-    out_dir = f"{STREAM_DIR}/{uuid}"
-    mpd_path = f"{out_dir}/reenc_index.m3u8"
-    mpd_path_adaptive = f"{out_dir}/index.m3u8"
-    print("Creating directory:", out_dir)
-    os.makedirs(out_dir, exist_ok=True)
-    plu = PlaylistURL(uuid) #playlist url
-    create_master_playlist(mpd_path_adaptive, plu)
-#    os.makedirs(out_dir, exist_ok=True)
-
-    # Start ffmpeg if not running
-    if uuid not in processes or processes[uuid].poll() is not None:
-        processes[uuid] = start_channel_hls(uuid)
-
-    # Wait up to 8 seconds for ffmpeg to generate a REAL mpd
-    # A real mpd has size > 500 bytes typically
-    for _ in range(150):  # 150 × 0.1 sec = 15 seconds
-        if os.path.exists(mpd_path) and os.path.getsize(mpd_path) > 500:
-          return FileResponse(mpd_path_adaptive, media_type="application/vnd.apple.mpegurl")
-        time.sleep(0.1)
-
-    # If still no real MPD → fail properly (player will retry)
-    raise HTTPException(status_code=503, detail="MPD not ready")
-
 
 @app.get("/stream/{uuid}/manifest.mpd")
 def serve_manifest_mpd(uuid: str, request: Request):
     out_dir = f"{STREAM_DIR}/{uuid}"
     mpd_path = f"{out_dir}/manifest.mpd"
-    print("Asking for manifest.mpd for UUID = :", uuid)
-#    os.makedirs(out_dir, exist_ok=True)
-
+    logger.debug(f"Asking for manifest.mpd for UUID = : {uuid}")
 
     client_id = f"{request.client.host}|{request.headers.get('user-agent', 'unknown')}"
+    logger.debug(f"client_id = {client_id}")
 
     # check if this client has recently had this stream killed
     # some times chromecast just asks again after timeout. Need to tell it that resources expired 
     # hopefully this will stop requests for manifest
     if (client_id, uuid) in flagged_clients:
         # client was in the list for this UUID
+        logger.info(f"Client is flagged {client_id} for uuid = {uuid}")
         flagged_time = flagged_clients[(client_id, uuid)]
         elapsed = time.time() - flagged_time
         if elapsed < FlagTimeOut:  # still in cooldown
@@ -293,62 +185,93 @@ def serve_manifest_mpd(uuid: str, request: Request):
         else:
             # cooldown expired -> remove from flagged
             del flagged_clients[(client_id, uuid)]
-
+            logger.info(f"client is no longer flagged {client_id} for uuid = {uuid}")
 
 
     # Start ffmpeg if not running
     if uuid not in processes or processes[uuid].poll() is not None:
-        print("Creating new process with UUID = :", uuid)
+        logger.info(f"Creating new process with UUID = : {uuid}")
         processes[uuid] = start_channel_mpd(uuid)
         # Set the last_access to initialise it. Otherwise it is not present in the inactivity monitor and it will not work
-        print("And set last_access for for UUID = :", uuid) 
+        logger.debug(f"And set last_access for for UUID = {uuid}")
         last_access[uuid] = time.time()
         # Set the session for client requesting the UUID
-        sessions[(client_id, uuid)] = time.time() #track last segment request (init with manifest request)
+        ua = request.headers.get("user-agent", "").lower()
+        sessions[(client_id, uuid)] = { "last_time": time.time(), "ua": ua,} #track last segment request (init with manifest request)
+        logger.info(f"Inital request for manifest.mpd for UUID = : {uuid}")
 
     # Wait up to 8 seconds for ffmpeg to generate a REAL mpd
     # A real mpd has size > 500 bytes typically
     for _ in range(150):  # 150 × 0.1 sec = 15 seconds
         if os.path.exists(mpd_path) and os.path.getsize(mpd_path) > 500:
-          return FileResponse(mpd_path, media_type="application/dash+xml")
+          # Get file extension
+          _, ext = os.path.splitext(mpd_path)
+          return FileResponse(mpd_path, media_type=get_MIME_Type(ext))
         time.sleep(0.1)
 
     # If still no real MPD → fail properly (player will retry)
+    logger.info("MPD not created in due course")
     raise HTTPException(status_code=503, detail="MPD not ready")
+
+
+app.mount(
+    "/player/",
+    StaticFiles(directory="player/", html=True),
+    name="player"
+)
+
+app.mount(
+    "/player2/",
+    StaticFiles(directory="player2/", html=True),
+    name="player"
+)
+
 
 @app.get("/stream/{uuid}/{segment}")
 def serve_segment(uuid: str, segment: str, request: Request):
     path = f"{STREAM_DIR}/{uuid}/{segment}"
 
-    if not os.path.isfile(path):
-        print(f"Requested file not found: {path}")
+    # Retry loop: try 10 times with 0.1s delay
+    MAX_RETRIES = 10
+    RETRY_DELAY = 0.1  # seconds
+    for attempt in range(MAX_RETRIES):
+        if os.path.isfile(path):
+            break
+        time.sleep(RETRY_DELAY)
+    else:
+        # After retries, still not found
+        logger.warning(f"Requested file not found after {MAX_RETRIES} retries: {path}")
         raise HTTPException(status_code=404, detail="Segment not found")
 
-    # mark activity time
-    # Only update last_access for actual segments, not playlists
+    # Mark activity time (only for actual segments)
     if is_segment_file(segment):
-      last_access[uuid] = time.time()
-      client_id = f"{request.client.host}|{request.headers.get('user-agent', 'unknown')}"
-      sessions[(client_id, uuid)] = time.time() #track last segment request
-    else:
-      print("Non-segment requested")
+        last_access[uuid] = time.time()
+        client_id = f"{request.client.host}|{request.headers.get('user-agent', 'unknown')}"
+        key = (client_id, uuid)
+        session = sessions.get(key)
+        if session:
+            session["last_time"] = time.time()  # track last segment request
 
-    # Set proper MIME type
-    if segment.endswith(".ts"):
-        media_type = "video/MP2T"
-    elif segment.endswith(".m4s"):
-        media_type = "video/iso.segment"
-    elif segment.endswith(".m3u8"):
-        media_type = "application/vnd.apple.mpegurl"
-    elif segment.endswith(".mpd"):
-        media_type = "application/dash+xml"
-    else:
-        media_type = "application/octet-stream"
+    # Get file extension and MIME type
+    _, ext = os.path.splitext(segment)
+    media_type = get_MIME_Type(ext)
 
-
+    # Return the file
     return FileResponse(path, media_type=media_type)
 
-    raise HTTPException(status_code=404, detail="Segment not found")
+
+def get_MIME_Type(ext: str) -> str:
+    # Set proper MIME type
+    if ext == ".ts":
+        return "video/MP2T"
+    elif ext == ".m4s":
+        return "video/iso.segment"
+    elif ext == ".m3u8":
+        return "application/vnd.apple.mpegurl"
+    elif ext == ".mpd":
+        return "application/dash+xml"
+    else:
+        return "application/octet-stream"
 
 def is_segment_file(filename: str) -> bool:
     """Return True if this is a media segment (TS or fMP4), False if playlist/manifest."""
@@ -356,32 +279,6 @@ def is_segment_file(filename: str) -> bool:
 
 def PlaylistURL(uuid):
     return os.path.join(baseURL, uuid)
-
-
-def create_master_playlist(pth, plu):
-#creates the adaptive streaming m3u8 runtime
-    """
-   Create an HLS master playlist file at the given path.
-    The path is also prefixed to the variant playlist filenames.
-    
-    Args:
-        pth (str): Path to the output master.m3u8 file AND folder prefix for variants.
-    """
-    content = f"""#EXTM3U
-#EXT-X-VERSION:3
-
-# Copy variant (original resolution)
-#EXT-X-STREAM-INF:BANDWIDTH=5000000,RESOLUTION=1920x1080
-{plu}/copy_index.m3u8
-
-# Transcoded 720p variant
-#EXT-X-STREAM-INF:BANDWIDTH=3000000,RESOLUTION=1280x720
-{plu}/reenc_index.m3u8
-"""
-    master_file = pth
-    with open(master_file, "w") as f:
-        f.write(content)
-    print(f"{master_file} created successfully")
 
 
 def create_master_playlist_mpd(pth, plu):
@@ -428,38 +325,43 @@ def create_master_playlist_mpd(pth, plu):
     master_file = pth
     with open(master_file, "w") as f:
         f.write(content)
-    print(f"{master_file} created successfully")
+    logger.info(f"{master_file} created successfully")
 
 def monitor_inactivity(timeout=InactivityTimeOut):
     while True:
-        print("Monitor_inactivity looped")
-        print(f"processes keys = {list(processes.keys())}")
+        logger.debug("Monitor_inactivity looped")
+        logger.debug(f"processes keys = {list(processes.keys())}")
         now = time.time()
 
         #monitor if client is requesting segments
-        for (client_id, uuid), last_time in list(sessions.items()):
-            if time.time() - last_time > timeout:
+        for (client_id, uuid), session in list(sessions.items()):
+             last_time = session["last_time"]
+             ua = session["ua"]
+             if time.time() - last_time > timeout:
                 # Remove session entry
                 del sessions[(client_id, uuid)]
-                # Flag this client+uuid to not send more mpds. prevent immediate restart            stopped_clients[(client_id, uuid)] = time.time()
-                flagged_clients[(client_id, uuid)] = time.time()
-                print(f"Client is repeatedly asking for manifest without segment request. Flagged")
+                # Flag this client+uuid to not send more mpds. prevent immediate restart 
+                # but only flag Google Cast for now. 
+                if is_chromecast(ua):
+                    flagged_clients[(client_id, uuid)] = time.time()
+                    logger.debug("Client is repeatedly asking for manifest without segment request. Flagged")
                 # Optional: if no other client is active, kill the FFmpeg process
                 if not any(u == uuid for (_, u) in sessions.keys()):
                     proc = processes.get(uuid)
                     if proc:
                         try:
                             proc.kill()
+                            logger.info(f"Killing FFmpeg for {uuid}")
                         except Exception as e:
-                            print(f"Error killing FFmpeg for {uuid}: {e}")
+                            logger.warning(f"Error killing FFmpeg for {uuid}: {e}")
                         del processes[uuid]
 
 
         for uuid, proc in list(processes.items()):
             if uuid in last_access:
-                print(f"Timediff = {now - last_access[uuid] > timeout}")
+                logger.debug(f"Timediff = {now - last_access[uuid] > timeout}")
                 if now - last_access[uuid] > timeout:
-                    print(f"Stopping FFmpeg for channel {uuid} due to inactivity")
+                    logger.info(f"Stopping FFmpeg for channel {uuid} due to inactivity")
 
                     # Kill FFmpeg
                     try:
@@ -479,11 +381,22 @@ def monitor_inactivity(timeout=InactivityTimeOut):
                                 fp = os.path.join(channel_dir, f)
                                 if os.path.isfile(fp):
                                     os.remove(fp)
-                            print(f"Cleaned RAM directory for channel {uuid}")
+                            logger.info(f"Cleaned RAM directory for channel {uuid}")
                         except Exception as e:
-                            print(f"Could not clean RAM directory for {uuid}: {e}")
+                            logger.warning(f"Could not clean RAM directory for {uuid}: {e}")
 
         time.sleep(5)
+
+
+def is_chromecast(ua: str) -> bool:
+    return (
+        "crkey" in ua or
+        "chromecast" in ua or
+        "googlecast" in ua
+    )
+
+
+
 
 
 def cleanup_worker_global(base_folder=STREAM_DIR, min_free_bytes=MIN_FREE_BYTES):
@@ -542,7 +455,7 @@ def is_deletable_segment(filename: str) -> bool:
 def purge_stream_dir():
     print(f"[STARTUP] Purging {STREAM_DIR} ...")
     if not os.path.exists(STREAM_DIR):
-        print("[STARTUP] Directory missing — creating it.")
+        logger.info("[STARTUP] Directory missing — creating it.")
         os.makedirs(STREAM_DIR, exist_ok=True)
         return
 
@@ -554,9 +467,9 @@ def purge_stream_dir():
             else:
                 os.remove(path)
         except Exception as e:
-            print(f"[STARTUP] Failed removing {path}: {e}")
+            logger.warning(f"[STARTUP] Failed removing {path}: {e}")
 
-    print(f"[STARTUP] Finished purging {STREAM_DIR}")
+    logger.info(f"[STARTUP] Finished purging {STREAM_DIR}")
 
 @app.on_event("startup")
 def startup_event():

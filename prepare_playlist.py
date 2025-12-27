@@ -73,7 +73,7 @@ def generate_playlist():
         short_channel_id = full_channel_id
 
         # Build new HLS URL
-        stream_url = f"{STREAM_BASE}{short_channel_id}/{segment_index}"
+        stream_url = stream_url = os.path.join(STREAM_BASE, short_channel_id, segment_index)
         # Choose the tvg-id to write: prefer original hex id, otherwise fall back to numeric id
         write_tvg_id = orig_tvg_id if orig_tvg_id else full_channel_id
 

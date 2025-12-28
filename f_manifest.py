@@ -38,6 +38,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# @app.middleware("http")
+# async def log_requests(request: Request, call_next):
+#     print("REQUEST PATH:", request.url.path)
+#     response = await call_next(request)
+#     print("RESPONSE STATUS:", response.status_code)
+#     return response
+
 
 
 # Dummy authentication
@@ -54,8 +61,8 @@ CHANNELS = [
 STREAM_DIR = "/tmp/ramdrive/stream"
 processes = {}          # channel → Popen
 last_access = {}        # channel → timestamp
-sessions = {}           # (client_id, uuid) -> [timestamp of last killed stream, ua]
-flagged_clients = {}    # (client_id, uuid) => timed out client : kicked due to no segment request
+sessions = {}           # (uuid) -> [timestamp of last killed stream, ua]
+flagged_uuids = {}    # (client_id, uuid) => timed out client : kicked due to no segment request
 
 
 MIN_FREE_BYTES=200000000
@@ -118,12 +125,13 @@ def start_channel_hls(uuid):
         "ffmpeg",
         "-loglevel", "warning",
         "-stats",
-        "-fflags", "+discardcorrupt+genpts+igndts",
+        "-f", "mpegts",
+        "-fflags", "+discardcorrupt+genpts+igndts+nobuffer",
         "-avoid_negative_ts", "make_zero",
         "-err_detect", "ignore_err",
         "-max_interleave_delta", "0",
-        "-probesize", "10M",
-        "-analyzeduration", "10M",
+        "-probesize", "1M", #"10M",
+        "-analyzeduration", "2M",#"10M",
         "-i", f"{streamURL}",
 
         # Re-encode section, high quality
@@ -131,9 +139,9 @@ def start_channel_hls(uuid):
         "-map", "0:v:0",
         "-map", "0:a:0",
         "-map", "-0:s",
-        "-vf", "scale=-1:720",
+        #"-vf", "scale=-1:720",
         #"-vf", "yadif=1,scale=-1:720",
-        #"-vf", "bwdif=mode=0:parity=auto,scale=-1:720",
+        "-vf", "bwdif=mode=0:parity=auto,scale=-1:720", "-r", "25",
         "-pix_fmt", "yuv420p",
         "-c:v", "libx264",
         "-tune", "zerolatency",
@@ -141,7 +149,7 @@ def start_channel_hls(uuid):
         "-profile:v", "high",
         "-level", "5.1",
         "-preset", "veryfast",
-        "-crf", "21",
+        "-crf", "23",
         "-maxrate", "6000k",
         "-bufsize", "6000k",
 
@@ -154,9 +162,11 @@ def start_channel_hls(uuid):
 
         "-f", "hls",
         "-hls_time", "2",
-        "-hls_list_size", "20",
+        "-hls_list_size", "2000",
         "-hls_flags", "independent_segments+delete_segments+program_date_time",
         "-hls_segment_type", "mpegts",
+        "-muxdelay", "0.7",
+        "-muxpreload", "0.7",
         "-hls_segment_filename", f"{out_dir}/hq_segment-%05d.ts",
         "-hls_base_url", base,
         f"{out_dir}/copy_index.m3u8",
@@ -289,23 +299,21 @@ def serve_manifest_mpd(uuid: str, request: Request):
 
 
     
-    client_id = f"{request.client.host}|{request.headers.get('user-agent', 'unknown')}"
+    client_id = ua(request)
     logger.debug(f"client_id = {client_id}")
 
-    # check if this client has recently had this stream killed
-    # some times chromecast just asks again after timeout. Need to tell it that resources expired 
-    # hopefully this will stop requests for manifest
-    if (client_id, uuid) in flagged_clients:
-        # client was in the list for this UUID
-        logger.info(f"Client is flagged {client_id} for uuid = {uuid}")
-        flagged_time = flagged_clients[(client_id, uuid)]
+    # check if this uuid is flagged
+    if (uuid) in flagged_uuids:
+        # uuid was in the flagged_uuids list
+        logger.info(f"UUID is flagged: {uuid}")
+        flagged_time = flagged_uuids[uuid]
         elapsed = time.time() - flagged_time
         if elapsed < FlagTimeOut:  # still in cooldown
             raise HTTPException(status_code=410, detail="Stream ended for this client")
         else:
             # cooldown expired -> remove from flagged
-            del flagged_clients[(client_id, uuid)]
-            logger.info(f"client is no longer flagged {client_id} for uuid = {uuid}")
+            del flagged_uuids[uuid]
+            logger.info(f"UUID is no longer flagged: {uuid}")
 
 
     # Start ffmpeg if not running
@@ -316,8 +324,8 @@ def serve_manifest_mpd(uuid: str, request: Request):
         logger.debug(f"And set last_access for for UUID = {uuid}")
         last_access[uuid] = time.time()
         # Set the session for client requesting the UUID
-        ua = request.headers.get("user-agent", "").lower()
-        sessions[(client_id, uuid)] = { "last_time": time.time(), "ua": ua,} #track last segment request (init with manifest request)
+        _ua = ua(request)
+        sessions[uuid] = { "last_time": time.time(), "ua": _ua,} #track last segment request (init with manifest request)
         logger.info(f"Inital request for index.m3u8 for UUID = : {uuid}")
 
     # Wait up to 15 seconds for ffmpeg to generate a REAL mpd
@@ -350,17 +358,17 @@ def serve_manifest_mpd(uuid: str, request: Request):
     # check if this client has recently had this stream killed
     # some times chromecast just asks again after timeout. Need to tell it that resources expired 
     # hopefully this will stop requests for manifest
-    if (client_id, uuid) in flagged_clients:
-        # client was in the list for this UUID
-        logger.info(f"Client is flagged {client_id} for uuid = {uuid}")
-        flagged_time = flagged_clients[(client_id, uuid)]
+    if uuid in flagged_uuids:
+        # UUID in the flagged_uuids list
+        logger.info(f"UUID is flagged: {uuid}")
+        flagged_time = flagged_uuids[uuid]
         elapsed = time.time() - flagged_time
         if elapsed < FlagTimeOut:  # still in cooldown
             raise HTTPException(status_code=410, detail="Stream ended for this client")
         else:
             # cooldown expired -> remove from flagged
-            del flagged_clients[(client_id, uuid)]
-            logger.info(f"client is no longer flagged {client_id} for uuid = {uuid}")
+            del flagged_uuids[uuid]
+            logger.info(f"UUID is no longer flagged: {uuid}")
 
 
     # Start ffmpeg if not running
@@ -371,8 +379,8 @@ def serve_manifest_mpd(uuid: str, request: Request):
         logger.debug(f"And set last_access for for UUID = {uuid}")
         last_access[uuid] = time.time()
         # Set the session for client requesting the UUID
-        ua = request.headers.get("user-agent", "").lower()
-        sessions[(client_id, uuid)] = { "last_time": time.time(), "ua": ua,} #track last segment request (init with manifest request)
+        _ua = ua(request)
+        sessions[uuid] = { "last_time": time.time(), "ua": _ua,} #track last segment request (init with manifest request)
         logger.info(f"Inital request for manifest.mpd for UUID = : {uuid}")
 
     # Wait up to 15 seconds for ffmpeg to generate a REAL mpd
@@ -389,6 +397,9 @@ def serve_manifest_mpd(uuid: str, request: Request):
     raise HTTPException(status_code=503, detail="MPD not ready")
 
 
+
+    
+
 app.mount(
     "/player/",
     StaticFiles(directory="player/", html=True),
@@ -396,14 +407,19 @@ app.mount(
 )
 
 app.mount(
-    "/player2/",
-    StaticFiles(directory="player2/", html=True),
-    name="player"
+    "/shaka/",
+    StaticFiles(directory="shaka/", html=True),
+    name="shaka"
 )
+
 
 
 @app.get("/stream/{uuid}/{segment}")
 def serve_segment(uuid: str, segment: str, request: Request):
+    client_host = request.client.host
+    client_port = request.client.port
+    user_agent = request.headers.get("user-agent")
+    logger.debug(f"{client_host}:{client_port}, User-Agent: {user_agent} requests /stream/{uuid}/{segment}")
     path = f"{STREAM_DIR}/{uuid}/{segment}"
 
     # Retry loop: try 10 times with 0.1s delay
@@ -422,10 +438,10 @@ def serve_segment(uuid: str, segment: str, request: Request):
     if is_segment_file(segment):
         last_access[uuid] = time.time()
         client_id = f"{request.client.host}|{request.headers.get('user-agent', 'unknown')}"
-        key = (client_id, uuid)
-        session = sessions.get(key)
+        session = sessions.get(uuid)
         if session:
             session["last_time"] = time.time()  # track last segment request
+            session["ua"] = client_id     # store who requested it
 
     # Get file extension and MIME type
     _, ext = os.path.splitext(segment)
@@ -541,27 +557,24 @@ def monitor_inactivity(timeout=InactivityTimeOut):
         now = time.time()
 
         #monitor if client is requesting segments
-        for (client_id, uuid), session in list(sessions.items()):
+        for uuid, session in list(sessions.items()):
              last_time = session["last_time"]
-             ua = session["ua"]
+             _ua = session["ua"]
              if time.time() - last_time > timeout:
                 # Remove session entry
-                del sessions[(client_id, uuid)]
-                # Flag this client+uuid to not send more mpds. prevent immediate restart 
-                # but only flag Google Cast for now. 
-                if is_chromecast(ua):
-                    flagged_clients[(client_id, uuid)] = time.time()
-                    logger.debug("Client is repeatedly asking for manifest without segment request. Flagged")
-                # Optional: if no other client is active, kill the FFmpeg process
-                if not any(u == uuid for (_, u) in sessions.keys()):
-                    proc = processes.get(uuid)
-                    if proc:
-                        try:
-                            proc.kill()
-                            logger.info(f"Killing FFmpeg for {uuid}")
-                        except Exception as e:
-                            logger.warning(f"Error killing FFmpeg for {uuid}: {e}")
-                        del processes[uuid]
+                del sessions[uuid]
+                # Flag uuid -> do not allow sending playlist again for FlagTimeout [seconds] 
+                flagged_uuids[uuid] = time.time()
+                logger.debug("Client is repeatedly asking for manifest without segment request. Flagged")
+                # kill the process if exists
+                proc = processes.get(uuid)
+                if proc:
+                  try:
+                    proc.kill()
+                    logger.info(f"Killing FFmpeg for {uuid}")
+                  except Exception as e:
+                    logger.warning(f"Error killing FFmpeg for {uuid}: {e}")
+                  del processes[uuid]
 
 
         for uuid, proc in list(processes.items()):
@@ -573,8 +586,8 @@ def monitor_inactivity(timeout=InactivityTimeOut):
                     # Kill FFmpeg
                     try:
                         proc.kill()
-                    except:
-                        pass
+                    except Exception as e:
+                        logger.warning(f"Error killing FFmpeg for {uuid}: {e}")
 
                     # Remove tracking entries
                     del processes[uuid]
@@ -603,7 +616,10 @@ def is_chromecast(ua: str) -> bool:
     )
 
 
-
+def ua(request: Request) -> str: # returns the user agent and header from requester
+    return (
+        f"{request.client.host}|{request.headers.get('user-agent', 'unknown')}"
+    )
 
 
 def cleanup_worker_global(base_folder=STREAM_DIR, min_free_bytes=MIN_FREE_BYTES):

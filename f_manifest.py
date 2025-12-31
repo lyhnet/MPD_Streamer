@@ -13,6 +13,9 @@ from dotenv import load_dotenv
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
 
+
+
+
 import logging
 
 # Configure logger
@@ -72,6 +75,13 @@ TVHPort=os.getenv("TVHPort")
 baseURL = os.getenv("baseURL")
 
 
+PROFILES = [
+    {"name": "hq", "height": 720, "crf": 23, "maxrate": 6000, "preset": "ultrafast"},
+    #{"name": "mq", "height": 540, "crf": 25, "maxrate": 3500, "preset": "ultrafast"},
+    {"name": "lq", "height": 360, "crf": 27, "maxrate": 1800, "preset": "ultrafast"},
+]
+
+
 UseGlobalCleaner=True
 InactivityTimeOut=20
 FlagTimeOut=180          # seconds to keep client banned/flagged for restarting request for specific UUID
@@ -80,7 +90,7 @@ FlagTimeOut=180          # seconds to keep client banned/flagged for restarting 
 #MPD file names
 MPD_InitSegName="init"
 MPD_ChunkName="chunk"
-MPD_Manifest="manifest.mpd"
+
 
 cleanup_started = False
 
@@ -100,207 +110,170 @@ def start_background_tasks():
 def SourceStreamURL(uuid: str):
     return f"{TVHURL.rstrip('/')}:{TVHPort}/stream/channelid/{uuid}?profile=pass"
 
-def start_channel_hls(uuid):
-    out_dir = f"{STREAM_DIR}/{uuid}"
-    os.makedirs(out_dir, exist_ok=True)
-    logger.debug(f"Creating directory: {out_dir}")
+def ffmpeg_quality_settings(out_dir, uuid, profile):
 
-    # Start a cleanup thread for this channel
-    if not UseGlobalCleaner:
-      threading.Thread(target=cleanup_worker, args=(uuid,), daemon=True).start()
-
-
-    # Clean directory
-    for f in os.listdir(out_dir):
-        os.remove(os.path.join(out_dir, f))
-
-    base = PlaylistURL(uuid)
-    #ensure trailing / for -hls to behave
-    if not base.endswith("/"):
-       base += "/"
-
-    streamURL= SourceStreamURL(uuid)
-
-    cmd = [
+    return [
+        #need to add mapping for each quality
+        "-sn",
+        "-map", "0:v:0",
+        "-map", "0:a:0",
+        "-map", "-0:s",
+        
+        # set the profile specific settings
+        "-vf", f"bwdif=mode=0:parity=auto,scale=-1:{profile['height']},fps=25",
+        "-crf", f"{profile['crf']}",
+        #"-preset", f"{profile['preset']}",
+        "-maxrate", f"{profile['maxrate']}k",
+        "-bufsize", f"{profile['maxrate']*2}k",
+    ]
+def ffmpeg_common_args(streamURL, profile):
+    return [
         "ffmpeg",
         "-loglevel", "warning",
         "-stats",
-        "-f", "mpegts",
+
         "-fflags", "+discardcorrupt+genpts+igndts+nobuffer",
         "-avoid_negative_ts", "make_zero",
         "-err_detect", "ignore_err",
         "-max_interleave_delta", "0",
-        "-probesize", "1M", #"10M",
-        "-analyzeduration", "2M",#"10M",
-        "-i", f"{streamURL}",
+        "-probesize", "2M",
+        "-analyzeduration", "2M",
 
-        # Re-encode section, high quality
+        "-i", streamURL,
+
+        # Mapping
         "-sn",
         "-map", "0:v:0",
         "-map", "0:a:0",
         "-map", "-0:s",
-        #"-vf", "scale=-1:720",
-        #"-vf", "yadif=1,scale=-1:720",
-        "-vf", "bwdif=mode=0:parity=auto,scale=-1:720", "-r", "25",
+
+        # Video
+        "-vsync", "cfr",
+        "-vf", f"bwdif=mode=0:parity=auto,scale=-1:{profile['height']},fps=25",
         "-pix_fmt", "yuv420p",
         "-c:v", "libx264",
-        "-tune", "zerolatency",
+        "-x264-params", "ref=4",
         "-x264opts", "keyint=48:min-keyint=1:scenecut=0",
+        "-tune", "zerolatency",
+
         "-profile:v", "high",
         "-level", "5.1",
-        "-preset", "veryfast",
-        "-crf", "23",
-        "-maxrate", "6000k",
-        "-bufsize", "6000k",
+        "-preset", f"{profile['preset']}",
+        "-crf", str(profile["crf"]),
+        "-maxrate", f"{profile['maxrate']}k",
+        "-bufsize", f"{profile['maxrate'] * 2}k",
 
+        # Audio
         "-c:a", "aac",
         "-ac", "2",
         "-ar", "48000",
         "-b:a", "128k",
+
+        # GOP
         "-g", "100",
         "-keyint_min", "100",
-
-        "-f", "hls",
-        "-hls_time", "2",
-        "-hls_list_size", "2000",
-        "-hls_flags", "independent_segments+delete_segments+program_date_time",
-        "-hls_segment_type", "mpegts",
-        "-muxdelay", "0.7",
-        "-muxpreload", "0.7",
-        "-hls_segment_filename", f"{out_dir}/hq_segment-%05d.ts",
-        "-hls_base_url", base,
-        f"{out_dir}/copy_index.m3u8",
-
-        # Re-encode section, low quality
-        # "-sn",
-        # "-map", "0:v:0",
-        # "-map", "0:a:0",
-        # "-map", "-0:s",
-
-        # "-vf", "yadif=1,scale=-1:720",
-        # "-pix_fmt", "yuv420p",
-        # "-c:v", "libx264",
-        # "-profile:v", "high",
-        # "-level", "5.1",
-        # "-preset", "ultrafast",
-        # "-crf", "23",
-        # "-maxrate", "3000k",
-        # "-bufsize", "6000k",
-
-        # "-c:a", "aac",
-        # "-ac", "2",
-        # "-ar", "48000",
-        # "-b:a", "128k",
-        # "-g", "100",
-        # "-keyint_min", "100",
-
-        # "-f", "hls",
-        # "-hls_time", "2",
-        # "-hls_list_size", "20",
-        # "-hls_flags", "independent_segments+delete_segments+program_date_time",
-        # "-hls_segment_type", "mpegts",
-        # "-hls_segment_filename", f"{out_dir}/lq_segment-%05d.ts",
-        # "-hls_base_url", base,
-        # f"{out_dir}/reenc_index.m3u8"
-
-
-    #  "-force_key_frames", "expr:gte(t,n_forced*1)",
-    #    "-muxdelay", "0",
-    #    "-muxpreload", "0",
-            #"-hls_flags", "append_list+omit_endlist",
-    # "-hls_base_url", base,
     ]
+def ffmpeg_output_args(out_dir, uuid, profile, output: str):
+    if output == "HLS":
+        base = PlaylistURL(uuid)
+        if not base.endswith("/"):
+            base += "/"
 
-    print("Starting FFmpeg:", " ".join(cmd))
-    return subprocess.Popen(cmd)
+        return [
+            "-f", "hls",
+            "-hls_time", "2",
+            "-hls_list_size", "2000",
+            "-hls_flags", "independent_segments+delete_segments+program_date_time",
+            "-hls_segment_type", "mpegts",
+            "-muxdelay", "0.7",
+            "-muxpreload", "0.7",
+            "-hls_segment_filename", f"{out_dir}/{profile['name']}_segment-%05d.ts",
+            "-hls_base_url", base,
+            f"{out_dir}/{profile['name']}.m3u8",
+        ]
+    elif output == "DASH":
+        return [
+            "-f", "dash",
+            "-window_size", "2000",
+            "-extra_window_size", "0",
+            "-seg_duration", "2",
+            "-use_template", "1",
+            "-use_timeline", "1",
+            "-remove_at_exit", "1",
 
-def start_channel_mpd(uuid):
+            "-init_seg_name", f"{MPD_InitSegName}--$RepresentationID$.m4s",
+            "-media_seg_name", f"{MPD_ChunkName}-$RepresentationID$-$Number%03d$.m4s",
+
+            f"{out_dir}/manifest.mpd",
+        ]        
+    else:
+        raise ValueError(f"Unknown output type: {output}")
+# Prepare stream directory
+def prepare_stream_dir(uuid):
     out_dir = f"{STREAM_DIR}/{uuid}"
     os.makedirs(out_dir, exist_ok=True)
     logger.debug(f"Creating directory: {out_dir}")
 
-    # Start a cleanup thread for this channel
     if not UseGlobalCleaner:
-      threading.Thread(target=cleanup_worker, args=(uuid,), daemon=True).start()
+        threading.Thread(
+            target=cleanup_worker,
+            args=(uuid,),
+            daemon=True
+        ).start()
 
-    # Clean directory before start
     for f in os.listdir(out_dir):
         os.remove(os.path.join(out_dir, f))
 
-    streamURL= SourceStreamURL(uuid)
+    return out_dir
+# Assemble and start ffmpeg command
+def start_channel(uuid, output: str):
+    out_dir = prepare_stream_dir(uuid)
+    streamURL = SourceStreamURL(uuid)
 
-    # FFmpeg LIVE DASH command
-    cmd = [
-        "ffmpeg",
-        "-loglevel", "warning",
-        "-stats",
-        "-fflags", "+discardcorrupt+genpts+igndts",
-        "-avoid_negative_ts", "make_zero",
-        "-err_detect", "ignore_err",
-        "-max_interleave_delta", "0",
-        "-probesize", "10M",
-        "-analyzeduration", "10M",
-        "-i", f"{streamURL}",
+    cmd = ffmpeg_common_args(streamURL, PROFILES[0])
+    for profile in PROFILES:
+        cmd += ffmpeg_quality_settings(out_dir, uuid, profile)
+        cmd += ffmpeg_output_args(out_dir, uuid, profile, output)
 
-        # Re-encode section, high quality
-        "-sn",
-        "-map", "0:v:0",
-        "-map", "0:a:0",
-        "-map", "-0:s",
-        "-vf", "setfield=tff,scale=-1:720",
-        #"-vf", "yadif=1,scale=-1:720",
-        #"-vf", "bwdif=mode=0:parity=auto,scale=-1:720",
-        "-pix_fmt", "yuv420p",
-        "-c:v", "libx264",
-        "-tune", "zerolatency",
-        "-x264opts", "keyint=48:min-keyint=1:scenecut=0",
-        "-profile:v", "high",
-        "-level", "5.1",
-        "-preset", "veryfast",
-        "-crf", "21",
-        "-maxrate", "6000k",
-        "-bufsize", "6000k",
-        "-vsync", "cfr",
-
-        # Audio encoding
-        "-c:a", "aac",
-        "-af", "aresample=async=1:first_pts=0",
-        "-ac", "2",
-        "-ar", "48000",
-        "-b:a", "128k",
-        "-g", "100",
-        "-keyint_min", "100",
-
-        # DASH live settings
-        "-f", "dash",
-        "-window_size", "2000", #time shift number of segments.
-        "-extra_window_size", "0", #delete older segments
-        "-init_seg_name", f"{MPD_InitSegName}--$RepresentationID$.m4s",
-        "-media_seg_name", f"{MPD_ChunkName}-$RepresentationID$-$Number%03d$.m4s",
-        "-seg_duration", "2",
-        "-use_template", "1",
-        "-use_timeline", "1",
-        "-remove_at_exit", "1",
-
-        f"{out_dir}/{MPD_Manifest}"
-    ]
-
-    logger.info(f"Starting FFmpeg: {' '.join(cmd)}")
+    logger.info("Starting FFmpeg (%s): %s", output.upper(), " ".join(cmd))
     return subprocess.Popen(cmd)
+#Define master playlist for HLS
+def write_master_playlist(out_dir, profiles):
+    content = "#EXTM3U\n#EXT-X-VERSION:3\n"
+
+    for p in profiles:
+        # Calculate approximate bandwidth in bits per second
+        bandwidth = int(p["maxrate"] * 1000)  # maxrate is in k, HLS expects bps
+        # Approximate width assuming 16:9 aspect ratio
+        width = int(p["height"] * 16 / 9)
+        content += f"#EXT-X-STREAM-INF:BANDWIDTH={bandwidth},RESOLUTION={width}x{p['height']}\n"
+        content += f"{p['name']}.m3u8\n"
+
+    with open(f"{out_dir}/index.m3u8", "w") as f:
+        f.write(content)
 
 
-@app.get("/stream/{uuid}/index.m3u8")
-def serve_manifest_mpd(uuid: str, request: Request):
+
+def get_playlist(uuid: str, output: str, request: Request) -> str:
     out_dir = f"{STREAM_DIR}/{uuid}"
-    hls_path = f"{out_dir}/copy_index.m3u8"
-    hls_path_main = f"{out_dir}/index.m3u8"
-    logger.debug(f"Asking for index.m3u8 for UUID = : {uuid}")
-    plu = PlaylistURL(uuid) #playlist url
 
-
+    if output != "HLS" and output != "DASH":
+        raise ValueError(f"Unknown output type: {output}")
     
-    client_id = ua(request)
-    logger.debug(f"client_id = {client_id}")
+    plu = PlaylistURL(uuid) #playlist url
+    if output == "HLS":
+        # store the path of the master playlist
+        path_main = f"{out_dir}/index.m3u8"
+        # get path of first profile m3u8 because we will wait for it to be created
+        path_first_profile = f"{out_dir}/{PROFILES[0]['name']}.m3u8"        
+        logger.debug(f"Asking for index.m3u8 for UUID = : {uuid}")
+    elif output == "DASH":
+        # store the path of the master playlist
+        path_main = f"{out_dir}/manifest.mpd"
+        path_first_profile=path_main        
+        logger.debug(f"Asking for manifest.mpd for UUID = : {uuid}")
+    else:
+        raise ValueError(f"Unknown output type: {output}")
 
     # check if this uuid is flagged
     if (uuid) in flagged_uuids:
@@ -309,94 +282,65 @@ def serve_manifest_mpd(uuid: str, request: Request):
         flagged_time = flagged_uuids[uuid]
         elapsed = time.time() - flagged_time
         if elapsed < FlagTimeOut:  # still in cooldown
-            raise HTTPException(status_code=410, detail="Stream ended for this client")
+            raise HTTPException(status_code=410, detail="This UUID (Channel) if flagged and in cooldown.")
         else:
             # cooldown expired -> remove from flagged
             del flagged_uuids[uuid]
             logger.info(f"UUID is no longer flagged: {uuid}")
 
-
     # Start ffmpeg if not running
+    # start by checking if process exists and is running
     if uuid not in processes or processes[uuid].poll() is not None:
         logger.info(f"Creating new process with UUID = : {uuid}")
-        processes[uuid] = start_channel_hls(uuid)
+        processes[uuid] = start_channel(uuid, output)
         # Set the last_access to initialise it. Otherwise it is not present in the inactivity monitor and it will not work
-        logger.debug(f"And set last_access for for UUID = {uuid}")
+        logger.debug(f"Setting last_access for for UUID = {uuid}")
         last_access[uuid] = time.time()
         # Set the session for client requesting the UUID
         _ua = ua(request)
         sessions[uuid] = { "last_time": time.time(), "ua": _ua,} #track last segment request (init with manifest request)
         logger.info(f"Inital request for index.m3u8 for UUID = : {uuid}")
 
-    # Wait up to 15 seconds for ffmpeg to generate a REAL mpd
-    # A real mpd has size > 500 bytes typically
+    # Wait up to 15 seconds for ffmpeg to generate a REAL playlist
+    # A real playlist has size > 200 bytes typically
+    min_size = 200
     start = time.time()
     for _ in range(300):  # 150 × 0.1 sec = 15 seconds
-        if os.path.exists(hls_path) and os.path.getsize(hls_path) > 200:
-          # Get file extension
-          create_master_playlist(hls_path_main, plu)
-          _, ext = os.path.splitext(hls_path_main)
-          return FileResponse(hls_path_main, media_type=get_MIME_Type(ext))
-        if _ % 10 == 0:
-          logger.debug(f"waited {time.time() - start:.1f}s for HLS")
+        if os.path.exists(path_first_profile) and os.path.getsize(path_first_profile) > min_size:
+            if output == "HLS":
+                # Create master playlist on the fly
+                # only for HLS
+                write_master_playlist(out_dir, PROFILES)    
+            logger.info(f"Playlist ready after {time.time() - start:.1f}s")
+            return path_main
         time.sleep(0.1)
 
     # If still no real m3u8 → fail properly (player will retry)
     logger.info("M3U8 (HLS) not created in due course")
-    raise HTTPException(status_code=503, detail="M3U8 (HLS) not ready")
+    raise ValueError(f"Playlist not ready in due course: {output}")
+
+# This triggers the start-up of an HLS stream with ffmpeg
+@app.get("/stream/{uuid}/index.m3u8")
+def serve_manifest_hls(uuid: str, request: Request):
+    try:
+        path = get_playlist(uuid, "HLS", request)
+        # Get file extension
+        _, ext = os.path.splitext(path)
+        return FileResponse(path, media_type=get_MIME_Type(ext))
+    except RuntimeError as e:
+        raise HTTPException(status_code=404, detail=str(e))    
+    
 
 
 @app.get("/stream/{uuid}/manifest.mpd")
 def serve_manifest_mpd(uuid: str, request: Request):
-    out_dir = f"{STREAM_DIR}/{uuid}"
-    mpd_path = f"{out_dir}/manifest.mpd"
-    logger.debug(f"Asking for manifest.mpd for UUID = : {uuid}")
-
-    client_id = f"{request.client.host}|{request.headers.get('user-agent', 'unknown')}"
-    logger.debug(f"client_id = {client_id}")
-
-    # check if this client has recently had this stream killed
-    # some times chromecast just asks again after timeout. Need to tell it that resources expired 
-    # hopefully this will stop requests for manifest
-    if uuid in flagged_uuids:
-        # UUID in the flagged_uuids list
-        logger.info(f"UUID is flagged: {uuid}")
-        flagged_time = flagged_uuids[uuid]
-        elapsed = time.time() - flagged_time
-        if elapsed < FlagTimeOut:  # still in cooldown
-            raise HTTPException(status_code=410, detail="Stream ended for this client")
-        else:
-            # cooldown expired -> remove from flagged
-            del flagged_uuids[uuid]
-            logger.info(f"UUID is no longer flagged: {uuid}")
-
-
-    # Start ffmpeg if not running
-    if uuid not in processes or processes[uuid].poll() is not None:
-        logger.info(f"Creating new process with UUID = : {uuid}")
-        processes[uuid] = start_channel_mpd(uuid)
-        # Set the last_access to initialise it. Otherwise it is not present in the inactivity monitor and it will not work
-        logger.debug(f"And set last_access for for UUID = {uuid}")
-        last_access[uuid] = time.time()
-        # Set the session for client requesting the UUID
-        _ua = ua(request)
-        sessions[uuid] = { "last_time": time.time(), "ua": _ua,} #track last segment request (init with manifest request)
-        logger.info(f"Inital request for manifest.mpd for UUID = : {uuid}")
-
-    # Wait up to 15 seconds for ffmpeg to generate a REAL mpd
-    # A real mpd has size > 500 bytes typically
-    for _ in range(150):  # 150 × 0.1 sec = 15 seconds
-        if os.path.exists(mpd_path) and os.path.getsize(mpd_path) > 500:
-          # Get file extension
-          _, ext = os.path.splitext(mpd_path)
-          return FileResponse(mpd_path, media_type=get_MIME_Type(ext))
-        time.sleep(0.1)
-
-    # If still no real MPD → fail properly (player will retry)
-    logger.info("MPD not created in due course")
-    raise HTTPException(status_code=503, detail="MPD not ready")
-
-
+    try:
+        path = get_playlist(uuid, "DASH", request)
+        # Get file extension
+        _, ext = os.path.splitext(path)
+        return FileResponse(path, media_type=get_MIME_Type(ext))
+    except RuntimeError as e:
+        raise HTTPException(status_code=404, detail=str(e)) 
 
     
 
@@ -411,7 +355,6 @@ app.mount(
     StaticFiles(directory="shaka/", html=True),
     name="shaka"
 )
-
 
 
 @app.get("/stream/{uuid}/{segment}")
@@ -471,84 +414,6 @@ def is_segment_file(filename: str) -> bool:
 def PlaylistURL(uuid):
     return os.path.join(baseURL, uuid)
 
-
-
-import os
-from fastapi.responses import FileResponse
-
-def create_master_playlist(pth, plu):
-    """
-    Create an HLS master playlist (index.m3u8) inside directory `pth`.
-
-    Args:
-        pth (str): Directory path where index.m3u8 will be created
-        plu (str): Relative path prefix for variant playlists
-    """
-    
-
-    content = f"""#EXTM3U
-#EXT-X-VERSION:3
-#EXT-X-INDEPENDENT-SEGMENTS
-#EXT-X-STREAM-INF:BANDWIDTH=5000000,RESOLUTION=1920x1080
-{plu}/copy_index.m3u8
-"""
-    master_file = pth
-    tmp = master_file + ".tmp"
-    with open(tmp, "w") as f:
-        f.write(content)
-    os.replace(tmp, master_file)
-    logger.info(f"{master_file} created successfully")
-
-
-
-
-
-
-def create_master_playlist_mpd(pth, plu):
-#creates the adaptive streaming mpd runtime
-# more  Representations can be added if ffmpeg makes several quality levels
-# mpeg-dash does not use sup-playlist like HLS that has the Master m3u8 with references to child m3u8's for each quality
-    content = f"""<?xml version="1.0" encoding="UTF-8"?>
-<MPD
-    xmlns="urn:mpeg:dash:schema:mpd:2011"
-    profiles="urn:mpeg:dash:profile:isoff-live:2011"
-    type="dynamic"
-    minimumUpdatePeriod="PT2S"
-    minBufferTime="PT2S"
-    timeShiftBufferDepth="PT60S"
-    availabilityStartTime="1970-01-01T00:00:00Z">
-
-  <Period id="1" start="PT0S">
-
-    <AdaptationSet
-        mimeType="video/mp4"
-        codecs="avc1.640028"
-        segmentAlignment="true"
-        startWithSAP="1">
-
-      <!-- Copy / original resolution -->
-      <Representation
-          id="copy"
-          bandwidth="5000000"
-          width="1920"
-          height="1080"
-          frameRate="25">
-        <BaseURL>{plu}</BaseURL>
-        <SegmentTemplate
-            initialization="init.mp4"
-            media="segment-$Number$.m4s"
-            startNumber="1"
-            duration="2"/>
-      </Representation>
-    </AdaptationSet>
-
-  </Period>
-</MPD>
-"""
-    master_file = pth
-    with open(master_file, "w") as f:
-        f.write(content)
-    logger.info(f"{master_file} created successfully")
 
 def monitor_inactivity(timeout=InactivityTimeOut):
     while True:

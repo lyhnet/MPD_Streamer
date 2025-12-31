@@ -76,7 +76,7 @@ baseURL = os.getenv("baseURL")
 
 
 PROFILES = [
-    {"name": "hq", "height": 720, "crf": 23, "maxrate": 6000, "preset": "ultrafast"},
+    {"name": "hq", "height": 720, "crf": 23, "maxrate": 6000, "preset": "veryfast"},
     #{"name": "mq", "height": 540, "crf": 25, "maxrate": 3500, "preset": "ultrafast"},
     {"name": "lq", "height": 360, "crf": 27, "maxrate": 1800, "preset": "ultrafast"},
 ]
@@ -110,24 +110,60 @@ def start_background_tasks():
 def SourceStreamURL(uuid: str):
     return f"{TVHURL.rstrip('/')}:{TVHPort}/stream/channelid/{uuid}?profile=pass"
 
-def ffmpeg_quality_settings(out_dir, uuid, profile):
+def ffmpeg_filter_complex(profiles=PROFILES):
+    """
+    Build the filter_complex string for multiple quality profiles.
+    Returns a single string suitable for passing to -filter_complex.
+    """
+    filter_parts = [f"[0:v]bwdif,scale=-1:{p['height']},fps=25[{p['name']}]" for p in profiles]
+    return "; ".join(filter_parts)
 
-    return [
-        #need to add mapping for each quality
-        "-sn",
-        "-map", "0:v:0",
-        "-map", "0:a:0",
-        "-map", "-0:s",
-        
+
+def ffmpeg_quality_settings(out_dir, uuid, profile, output):
+    args =  []
+    #need to add mapping for each quality
+    if output == "HLS":
+        args += [
+            "-map", "0:v:0",
+            "-map", "0:a:0",
+            "-map", "-0:s",
+            # set the profile specific settings
+            "-vf", f"bwdif=mode=0:parity=auto,scale=-1:{profile['height']},fps=25",
+        ]
+    elif output == "DASH":
+        args += [
+            "-map", f"[{profile['name']}]",
+            "-map", "0:a:0",
+            "-map", "-0:s",
+        ]
+    else:
+        raise ValueError(f"Unknown output type: {output}")
+    
+    args += [        
         # set the profile specific settings
-        "-vf", f"bwdif=mode=0:parity=auto,scale=-1:{profile['height']},fps=25",
         "-crf", f"{profile['crf']}",
-        #"-preset", f"{profile['preset']}",
+        "-preset", f"{profile['preset']}",
         "-maxrate", f"{profile['maxrate']}k",
         "-bufsize", f"{profile['maxrate']*2}k",
-    ]
-def ffmpeg_common_args(streamURL, profile):
-    return [
+        ]
+    logger.info(f"FFmpeg quality settings for profile {profile['name']}: {' '.join(args)}")
+    return args
+def ffmpeg_common_mapping(streamURL, profile, output):
+    args =  []
+    if output == "HLS":
+        pass
+    elif output == "DASH":
+        args += [
+            "-filter_complex", ffmpeg_filter_complex(PROFILES)
+        ]
+    else:
+        raise ValueError(f"Unknown output type: {output}")
+    
+    return args
+def ffmpeg_common_args(streamURL, profile, output):
+    args =  []
+    
+    args += [
         "ffmpeg",
         "-loglevel", "warning",
         "-stats",
@@ -141,15 +177,21 @@ def ffmpeg_common_args(streamURL, profile):
 
         "-i", streamURL,
 
-        # Mapping
-        "-sn",
-        "-map", "0:v:0",
-        "-map", "0:a:0",
-        "-map", "-0:s",
-
-        # Video
         "-vsync", "cfr",
-        "-vf", f"bwdif=mode=0:parity=auto,scale=-1:{profile['height']},fps=25",
+        ]
+
+    if output == "HLS":
+        pass
+    elif output == "DASH":
+        args += [
+            "-filter_complex", ffmpeg_filter_complex(PROFILES)
+        ]
+    else:
+        raise ValueError(f"Unknown output type: {output}")
+
+
+    args += [
+        # Video
         "-pix_fmt", "yuv420p",
         "-c:v", "libx264",
         "-x264-params", "ref=4",
@@ -158,10 +200,6 @@ def ffmpeg_common_args(streamURL, profile):
 
         "-profile:v", "high",
         "-level", "5.1",
-        "-preset", f"{profile['preset']}",
-        "-crf", str(profile["crf"]),
-        "-maxrate", f"{profile['maxrate']}k",
-        "-bufsize", f"{profile['maxrate'] * 2}k",
 
         # Audio
         "-c:a", "aac",
@@ -172,7 +210,9 @@ def ffmpeg_common_args(streamURL, profile):
         # GOP
         "-g", "100",
         "-keyint_min", "100",
-    ]
+        ]
+    return args
+
 def ffmpeg_output_args(out_dir, uuid, profile, output: str):
     if output == "HLS":
         base = PlaylistURL(uuid)
@@ -209,7 +249,7 @@ def ffmpeg_output_args(out_dir, uuid, profile, output: str):
     else:
         raise ValueError(f"Unknown output type: {output}")
 # Prepare stream directory
-def prepare_stream_dir(uuid):
+def prepare_stream_dir(uuid, output):
     out_dir = f"{STREAM_DIR}/{uuid}"
     os.makedirs(out_dir, exist_ok=True)
     logger.debug(f"Creating directory: {out_dir}")
@@ -226,14 +266,21 @@ def prepare_stream_dir(uuid):
 
     return out_dir
 # Assemble and start ffmpeg command
-def start_channel(uuid, output: str):
-    out_dir = prepare_stream_dir(uuid)
+def start_channel(uuid, output):
+    out_dir = prepare_stream_dir(uuid, output)
     streamURL = SourceStreamURL(uuid)
 
-    cmd = ffmpeg_common_args(streamURL, PROFILES[0])
-    for profile in PROFILES:
-        cmd += ffmpeg_quality_settings(out_dir, uuid, profile)
-        cmd += ffmpeg_output_args(out_dir, uuid, profile, output)
+    cmd = ffmpeg_common_args(streamURL, PROFILES[0], output)
+    for i, profile in enumerate(PROFILES):
+        cmd += ffmpeg_quality_settings(out_dir, uuid, profile, output)
+        if output == "HLS":
+            # add output format for each profile for HLS because each profile has its own playlist
+            cmd += ffmpeg_output_args(out_dir, uuid, profile, output)
+        if output == "DASH" and i == len(PROFILES) - 1:
+            # only add output format once for DASH because all profiles are in the same manifest
+            cmd += [ "-map" , "0:a:0", "-map", "-0:s"]  # no need to repeat for each profile 
+            cmd += ffmpeg_output_args(out_dir, uuid, profile, output)  
+                     
 
     logger.info("Starting FFmpeg (%s): %s", output.upper(), " ".join(cmd))
     return subprocess.Popen(cmd)
@@ -253,6 +300,20 @@ def write_master_playlist(out_dir, profiles):
         f.write(content)
 
 
+# for mpeg dash
+# ffmpeg -i input.ts \
+#   -filter_complex "\
+#     [0:v]bwdif,scale=-1:720,fps=25[v720]; \
+#     [0:v]bwdif,scale=-1:540,fps=25[v540]; \
+#     [0:v]bwdif,scale=-1:360,fps=25[v360]" \
+#   -map "[v720]" -map 0:a -c:v:0 libx264 -b:v:0 6000k -maxrate:v:0 6000k -bufsize:v:0 12000k -c:a:0 aac -b:a:0 128k \
+#   -map "[v540]" -map 0:a -c:v:1 libx264 -b:v:1 3500k -maxrate:v:1 3500k -bufsize:v:1 7000k -c:a:1 aac -b:a:1 128k \
+#   -map "[v360]" -map 0:a -c:v:2 libx264 -b:v:2 1800k -maxrate:v:2 1800k -bufsize:v:2 3600k -c:a:2 aac -b:a:2 128k \
+#   -f dash -window_size 2000 -extra_window_size 0 -seg_duration 2 \
+#   -use_template 1 -use_timeline 1 -remove_at_exit 1 \
+#   -init_seg_name init--$RepresentationID$.m4s \
+#   -media_seg_name chunk-$RepresentationID$-$Number%03d$.m4s \
+#   /tmp/ramdrive/stream/877117831/manifest.mpd
 
 def get_playlist(uuid: str, output: str, request: Request) -> str:
     out_dir = f"{STREAM_DIR}/{uuid}"

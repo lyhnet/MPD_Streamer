@@ -1,162 +1,162 @@
 #EXTM3U
 #EXTXMLTV: http://kodi.lyhnemail.com:19981/xmltv/channels
 #EXTINF:-1 tvg-id="87c1473404874bb75cc80d40e7e02d10" tvg-name="DR1 HD" tvg-chno="1" group-title="TV",DR1 HD
-https://kodi.lyhnemail.com/streamer/stream/877117831/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/877117831/manifest.mpd
 #EXTINF:-1 tvg-id="4864942fd7239acff7b6eec667904840" tvg-name="DR2" tvg-chno="2" group-title="TV",DR2
-https://kodi.lyhnemail.com/streamer/stream/798254152/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/798254152/manifest.mpd
 #EXTINF:-1 tvg-id="c85cab9ca2767358d9d52c5bf5d5807c" tvg-name="TV2 Syd HD" tvg-chno="3" group-title="TV",TV2 Syd HD
-https://kodi.lyhnemail.com/streamer/stream/480992456/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/480992456/manifest.mpd
 #EXTINF:-1 tvg-id="85db0815eb4fc7c9c53527b1fbca7867" tvg-name="Ramasjang" tvg-chno="5" group-title="TV",Ramasjang
-https://kodi.lyhnemail.com/streamer/stream/352902021/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/352902021/manifest.mpd
 #EXTINF:-1 tvg-id="88933474530d7f56b0a133afc05a715e" tvg-name="TV SYD+ HD" tvg-chno="8" group-title="TV",TV SYD+ HD
-https://kodi.lyhnemail.com/streamer/stream/1949602696/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/1949602696/manifest.mpd
 #EXTINF:-1 tvg-id="30ff8db45cf5063a8e018f9eade52c94" tvg-name="TV3 HD" tvg-chno="9" group-title="TV",TV3 HD
-https://kodi.lyhnemail.com/streamer/stream/881721136/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/881721136/manifest.mpd
 #EXTINF:-1 tvg-id="c7b2518cec7784db0e648204e9b694d6" tvg-name="TV3+ HD (DK)" tvg-chno="10" group-title="TV",TV3+ HD (DK)
-https://kodi.lyhnemail.com/streamer/stream/206680775/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/206680775/manifest.mpd
 #EXTINF:-1 tvg-id="e1e2868c3d2b2949fdf9e9cdabc50c73" tvg-name="TV2 Charlie HD" tvg-chno="11" group-title="TV",TV2 Charlie HD
-https://kodi.lyhnemail.com/streamer/stream/210166497/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/210166497/manifest.mpd
 #EXTINF:-1 tvg-id="28ee38ae61a682a7fc79e7fe75191041" tvg-name="TV2 Echo HD" tvg-chno="12" group-title="TV",TV2 Echo HD
-https://kodi.lyhnemail.com/streamer/stream/775482920/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/775482920/manifest.mpd
 #EXTINF:-1 tvg-id="2292fdc19066c9acd59b13ee83300bf4" tvg-name="dk4" tvg-chno="13" group-title="TV",dk4
-https://kodi.lyhnemail.com/streamer/stream/1107137058/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/1107137058/manifest.mpd
 #EXTINF:-1 tvg-id="3392f381f34411055734ef53bdbc8b06" tvg-name="Kanal 4 HD" tvg-chno="14" group-title="TV",Kanal 4 HD
-https://kodi.lyhnemail.com/streamer/stream/32739891/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/32739891/manifest.mpd
 #EXTINF:-1 tvg-id="364225c8e7103361c50290e79ef1b63e" tvg-name="Kanal 5 HD" tvg-chno="15" group-title="TV",Kanal 5 HD
-https://kodi.lyhnemail.com/streamer/stream/1210401334/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/1210401334/manifest.mpd
 #EXTINF:-1 tvg-id="80beef6c28eeb966335485f165ca4e81" tvg-name="TV2 Fri HD" tvg-chno="16" group-title="TV",TV2 Fri HD
-https://kodi.lyhnemail.com/streamer/stream/1827651200/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/1827651200/manifest.mpd
 #EXTINF:-1 tvg-id="291d13615cf938b3a6e2c18c15017ff9" tvg-name="TV3 Puls HD" tvg-chno="17" group-title="TV",TV3 Puls HD
-https://kodi.lyhnemail.com/streamer/stream/1628642601/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/1628642601/manifest.mpd
 #EXTINF:-1 tvg-id="2a94231b88d6ee28f9659ad9eebc15a5" tvg-name="Kanal Syd" tvg-chno="18" group-title="TV",Kanal Syd
-https://kodi.lyhnemail.com/streamer/stream/455316522/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/455316522/manifest.mpd
 #EXTINF:-1 tvg-id="f290b34a71b07b7a46bf887b1c557534" tvg-name="Folketinget" tvg-chno="19" group-title="TV",Folketinget
-https://kodi.lyhnemail.com/streamer/stream/1253282034/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/1253282034/manifest.mpd
 #EXTINF:-1 tvg-id="ffac63d487115ebda059c737fe9954e9" tvg-name="DR1Syn" tvg-chno="20" group-title="TV",DR1Syn
-https://kodi.lyhnemail.com/streamer/stream/1415818495/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/1415818495/manifest.mpd
 #EXTINF:-1 tvg-id="cbfd352eb34ea3f93b9de569ef4f78d5" tvg-name="DR2Syn" tvg-chno="21" group-title="TV",DR2Syn
-https://kodi.lyhnemail.com/streamer/stream/775290315/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/775290315/manifest.mpd
 #EXTINF:-1 tvg-id="4ea5daca02d56e28f2d905d26eef66a7" tvg-name="Prøvekanal" tvg-chno="23" group-title="TV",Prøvekanal
-https://kodi.lyhnemail.com/streamer/stream/1255843150/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/1255843150/manifest.mpd
 #EXTINF:-1 tvg-id="d6aba859aa1a1146b97d738db56da0f2" tvg-name="TV2 News HD" tvg-chno="31" group-title="TV",TV2 News HD
-https://kodi.lyhnemail.com/streamer/stream/1504226262/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/1504226262/manifest.mpd
 #EXTINF:-1 tvg-id="b914459470c0bb123337f0a2a88ab14f" tvg-name="Sky News" tvg-chno="32" group-title="TV",Sky News
-https://kodi.lyhnemail.com/streamer/stream/340071609/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/340071609/manifest.mpd
 #EXTINF:-1 tvg-id="48b9a31947dddb62cef19e82830b6bc0" tvg-name="Eurosport 1" tvg-chno="38" group-title="TV",Eurosport 1
-https://kodi.lyhnemail.com/streamer/stream/430160200/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/430160200/manifest.mpd
 #EXTINF:-1 tvg-id="0c94a34cf474765a0b0721a5cd092faa" tvg-name="TV3 Sport" tvg-chno="39" group-title="TV",TV3 Sport
-https://kodi.lyhnemail.com/streamer/stream/1285788684/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/1285788684/manifest.mpd
 #EXTINF:-1 tvg-id="594f7d6bf5fce157564f0758f00a630e" tvg-name="TV3 MAX" tvg-chno="40" group-title="TV",TV3 MAX
-https://kodi.lyhnemail.com/streamer/stream/1803374425/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/1803374425/manifest.mpd
 #EXTINF:-1 tvg-id="fd27f22551d6594407dafca230aefc8b" tvg-name="TV2 SPORT HD" tvg-chno="41" group-title="TV",TV2 SPORT HD
-https://kodi.lyhnemail.com/streamer/stream/636626941/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/636626941/manifest.mpd
 #EXTINF:-1 tvg-id="1a90fa0a27eebcd050fa84a39802b3e4" tvg-name="Sport Live" tvg-chno="42" group-title="TV",Sport Live
-https://kodi.lyhnemail.com/streamer/stream/184193050/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/184193050/manifest.mpd
 #EXTINF:-1 tvg-id="0b09127fc4a4476456a5e564e2dc6a24" tvg-name="V Sport Golf HD" tvg-chno="45" group-title="TV",V Sport Golf HD
-https://kodi.lyhnemail.com/streamer/stream/2131888395/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/2131888395/manifest.mpd
 #EXTINF:-1 tvg-id="2217c394b54eb8d140b93f3720be903f" tvg-name="TV2 SPORT X" tvg-chno="46" group-title="TV",TV2 SPORT X
-https://kodi.lyhnemail.com/streamer/stream/348329762/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/348329762/manifest.mpd
 #EXTINF:-1 tvg-id="02f27a5a5142c999e5728a3b7fb9061a" tvg-name="V Sport UltraHD" tvg-chno="47" group-title="TV",V Sport UltraHD
-https://kodi.lyhnemail.com/streamer/stream/1518006786/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/1518006786/manifest.mpd
 #EXTINF:-1 tvg-id="9a69e68a42ba4c547e0a6a1dd51b52b9" tvg-name="Deluxe Music" tvg-chno="51" group-title="TV",Deluxe Music
-https://kodi.lyhnemail.com/streamer/stream/182872474/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/182872474/manifest.mpd
 #EXTINF:-1 tvg-id="d414244173e9f0c4c11f0755c49a2ef1" tvg-name="Uptown Classic" tvg-chno="52" group-title="TV",Uptown Classic
-https://kodi.lyhnemail.com/streamer/stream/1092883668/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/1092883668/manifest.mpd
 #EXTINF:-1 tvg-id="3ebcd15b5dbc819a1eed1f57c3f4f0a3" tvg-name="MTV Nordic" tvg-chno="53" group-title="TV",MTV Nordic
-https://kodi.lyhnemail.com/streamer/stream/1540471870/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/1540471870/manifest.mpd
 #EXTINF:-1 tvg-id="e60104ee37bd341dd56cce0bbb132e54" tvg-name="Nick Music" tvg-chno="54" group-title="TV",Nick Music
-https://kodi.lyhnemail.com/streamer/stream/1845756390/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/1845756390/manifest.mpd
 #EXTINF:-1 tvg-id="a0c407134c9d742bcb484865128e9a8a" tvg-name="National Geographic ch.HD" tvg-chno="60" group-title="TV",National Geographic ch.HD
-https://kodi.lyhnemail.com/streamer/stream/319276192/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/319276192/manifest.mpd
 #EXTINF:-1 tvg-id="bbddf5b729ecf181cb4d1902f86fef80" tvg-name="Viasat Explore HD" tvg-chno="61" group-title="TV",Viasat Explore HD
-https://kodi.lyhnemail.com/streamer/stream/938859963/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/938859963/manifest.mpd
 #EXTINF:-1 tvg-id="ab85c90c6f1111175e0db0438e294ab7" tvg-name="Discovery Channel HD" tvg-chno="62" group-title="TV",Discovery Channel HD
-https://kodi.lyhnemail.com/streamer/stream/214533547/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/214533547/manifest.mpd
 #EXTINF:-1 tvg-id="4c3dd44d22d4c3d7b94f4d2dd1828672" tvg-name="Animal Planet HD" tvg-chno="63" group-title="TV",Animal Planet HD
-https://kodi.lyhnemail.com/streamer/stream/1305754956/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/1305754956/manifest.mpd
 #EXTINF:-1 tvg-id="9cc1492a0828f718c49e04489b54f954" tvg-name="Viasat History HD" tvg-chno="64" group-title="TV",Viasat History HD
-https://kodi.lyhnemail.com/streamer/stream/709476764/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/709476764/manifest.mpd
 #EXTINF:-1 tvg-id="5c20366208659ac4ae246885ab108b0f" tvg-name="Viasat Nature HD" tvg-chno="65" group-title="TV",Viasat Nature HD
-https://kodi.lyhnemail.com/streamer/stream/1647714396/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/1647714396/manifest.mpd
 #EXTINF:-1 tvg-id="fb2b682a84c479750488ff78a553d60b" tvg-name="ID Investigation Discovery" tvg-chno="72" group-title="TV",ID Investigation Discovery
-https://kodi.lyhnemail.com/streamer/stream/711470075/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/711470075/manifest.mpd
 #EXTINF:-1 tvg-id="4790049545f164656a0136a6b6c45417" tvg-name="Nickelodeon HD" tvg-chno="79" group-title="TV",Nickelodeon HD
-https://kodi.lyhnemail.com/streamer/stream/352620615/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/352620615/manifest.mpd
 #EXTINF:-1 tvg-id="90e564e5a157519671c017e7adb16824" tvg-name="Disney Channel" tvg-chno="80" group-title="TV",Disney Channel
-https://kodi.lyhnemail.com/streamer/stream/1701111184/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/1701111184/manifest.mpd
 #EXTINF:-1 tvg-id="11ef9d50d55fd8f700b6aa39b29ba115" tvg-name="Nick JR" tvg-chno="81" group-title="TV",Nick JR
-https://kodi.lyhnemail.com/streamer/stream/1352527633/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/1352527633/manifest.mpd
 #EXTINF:-1 tvg-id="81ba60e5e0f31e857339eed9a6e16404" tvg-name="Das Erste HD" tvg-chno="87" group-title="TV",Das Erste HD
-https://kodi.lyhnemail.com/streamer/stream/1700838017/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/1700838017/manifest.mpd
 #EXTINF:-1 tvg-id="1a4c30af51dcf517d06427ad0ae5dba6" tvg-name="ZDF HD" tvg-chno="88" group-title="TV",ZDF HD
-https://kodi.lyhnemail.com/streamer/stream/791694362/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/791694362/manifest.mpd
 #EXTINF:-1 tvg-id="39dea6a60d3fab580079896212fd7851" tvg-name="NDR HD" tvg-chno="89" group-title="TV",NDR HD
-https://kodi.lyhnemail.com/streamer/stream/648470073/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/648470073/manifest.mpd
 #EXTINF:-1 tvg-id="41ba1c2f89bf2282ab3fb8d101545f1c" tvg-name="RTL HD" tvg-chno="90" group-title="TV",RTL HD
-https://kodi.lyhnemail.com/streamer/stream/790411841/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/790411841/manifest.mpd
 #EXTINF:-1 tvg-id="65abf2aa176fa5cd7e48b72f6c0c9346" tvg-name="SAT.1" tvg-chno="91" group-title="TV",SAT.1
-https://kodi.lyhnemail.com/streamer/stream/720546661/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/720546661/manifest.mpd
 #EXTINF:-1 tvg-id="28550da922bb0beebcf2f9251c3cbdc9" tvg-name="ProSieben" tvg-chno="92" group-title="TV",ProSieben
-https://kodi.lyhnemail.com/streamer/stream/688739624/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/688739624/manifest.mpd
 #EXTINF:-1 tvg-id="fb40cff387e0597f935b576e610fd408" tvg-name="3sat HD" tvg-chno="93" group-title="TV",3sat HD
-https://kodi.lyhnemail.com/streamer/stream/1942962427/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/1942962427/manifest.mpd
 #EXTINF:-1 tvg-id="86bb828f9514238a45348dc6f979ea9b" tvg-name="SVT1 HD" tvg-chno="94" group-title="TV",SVT1 HD
-https://kodi.lyhnemail.com/streamer/stream/260225926/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/260225926/manifest.mpd
 #EXTINF:-1 tvg-id="1d8b9f3667df3d5477b15cd71ab881d8" tvg-name="SVT2 HD" tvg-chno="95" group-title="TV",SVT2 HD
-https://kodi.lyhnemail.com/streamer/stream/916425501/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/916425501/manifest.mpd
 #EXTINF:-1 tvg-id="9ab4396d3f5399201c3c176d15b4e308" tvg-name="TV4 SE HD" tvg-chno="96" group-title="TV",TV4 SE HD
-https://kodi.lyhnemail.com/streamer/stream/1832498330/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/1832498330/manifest.mpd
 #EXTINF:-1 tvg-id="252f71fa248319a88a06a807a34aba2a" tvg-name="NRK1 HD" tvg-chno="97" group-title="TV",NRK1 HD
-https://kodi.lyhnemail.com/streamer/stream/2054237989/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/2054237989/manifest.mpd
 #EXTINF:-1 tvg-id="13e850880694ac7e67f4e0e4df49dbcd" tvg-name="TV5 Monde" tvg-chno="98" group-title="TV",TV5 Monde
-https://kodi.lyhnemail.com/streamer/stream/139520019/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/139520019/manifest.mpd
 #EXTINF:-1 tvg-id="1972cb1c8ae7c0f592af08d40117d835" tvg-name="DR P1" tvg-chno="401" group-title="TV",DR P1
-https://kodi.lyhnemail.com/streamer/stream/483095065/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/483095065/manifest.mpd
 #EXTINF:-1 tvg-id="fbe2a7a69efcfa443e747c74068a6cae" tvg-name="DR P2 Klassisk" tvg-chno="402" group-title="TV",DR P2 Klassisk
-https://kodi.lyhnemail.com/streamer/stream/648536827/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/648536827/manifest.mpd
 #EXTINF:-1 tvg-id="94103c7362e0bc6aee7b435d6026d2ed" tvg-name="DR P3" tvg-chno="403" group-title="TV",DR P3
-https://kodi.lyhnemail.com/streamer/stream/1933316244/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/1933316244/manifest.mpd
 #EXTINF:-1 tvg-id="9b542704fbccd20728172b79902c3257" tvg-name="DR P4 - Syd" tvg-chno="404" group-title="TV",DR P4 - Syd
-https://kodi.lyhnemail.com/streamer/stream/69686427/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/69686427/manifest.mpd
 #EXTINF:-1 tvg-id="59d374cc939a6b1903424c1332677166" tvg-name="DR P4 - Trekanten" tvg-chno="405" group-title="TV",DR P4 - Trekanten
-https://kodi.lyhnemail.com/streamer/stream/1282724697/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/1282724697/manifest.mpd
 #EXTINF:-1 tvg-id="cea06b43d7e96ad7103eaea074797f12" tvg-name="DR P5" tvg-chno="406" group-title="TV",DR P5
-https://kodi.lyhnemail.com/streamer/stream/1131126990/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/1131126990/manifest.mpd
 #EXTINF:-1 tvg-id="dbbf2c04ae18d27c5c28c8bde6ca0c65" tvg-name="DR P6 Beat" tvg-chno="407" group-title="TV",DR P6 Beat
-https://kodi.lyhnemail.com/streamer/stream/70041563/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/70041563/manifest.mpd
 #EXTINF:-1 tvg-id="b91d2ed9e527e10d4ecc71208069077b" tvg-name="myROCK" tvg-chno="410" group-title="TV",myROCK
-https://kodi.lyhnemail.com/streamer/stream/1496194489/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/1496194489/manifest.mpd
 #EXTINF:-1 tvg-id="2db7a276597a668c9be5b6ccdcc4b49d" tvg-name="Classic FM" tvg-chno="411" group-title="TV",Classic FM
-https://kodi.lyhnemail.com/streamer/stream/1990375213/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/1990375213/manifest.mpd
 #EXTINF:-1 tvg-id="d0e7404396e1a6a7e27f95228ac6e17c" tvg-name="Radio Globus" tvg-chno="412" group-title="TV",Radio Globus
-https://kodi.lyhnemail.com/streamer/stream/1128327120/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/1128327120/manifest.mpd
 #EXTINF:-1 tvg-id="2c538f9d81f4580d13c3bb456788ca94" tvg-name="Globus Guld Nord" tvg-chno="413" group-title="TV",Globus Guld Nord
-https://kodi.lyhnemail.com/streamer/stream/495932204/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/495932204/manifest.mpd
 #EXTINF:-1 tvg-id="127a3d09c63173bcb26a5b2a54051cce" tvg-name="Globus Guld Syd" tvg-chno="414" group-title="TV",Globus Guld Syd
-https://kodi.lyhnemail.com/streamer/stream/155023890/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/155023890/manifest.mpd
 #EXTINF:-1 tvg-id="d2e8db188371af3bd30590bdad5d6e22" tvg-name="Skala FM" tvg-chno="415" group-title="TV",Skala FM
-https://kodi.lyhnemail.com/streamer/stream/417065170/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/417065170/manifest.mpd
 #EXTINF:-1 tvg-id="79962a3b3a6a6a8bfd4264903da451d3" tvg-name="Radio Ådalen" tvg-chno="416" group-title="TV",Radio Ådalen
-https://kodi.lyhnemail.com/streamer/stream/992646777/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/992646777/manifest.mpd
 #EXTINF:-1 tvg-id="c27320b17155e48301f4b959b8e5c162" tvg-name="Radio 100" tvg-chno="417" group-title="TV",Radio 100
-https://kodi.lyhnemail.com/streamer/stream/824210370/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/824210370/manifest.mpd
 #EXTINF:-1 tvg-id="317d4bb8b9e4559a5f41086e610640ed" tvg-name="The Voice" tvg-chno="418" group-title="TV",The Voice
-https://kodi.lyhnemail.com/streamer/stream/944471345/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/944471345/manifest.mpd
 #EXTINF:-1 tvg-id="828c54477b6eb776e87ad37b945c856d" tvg-name="Nova FM" tvg-chno="419" group-title="TV",Nova FM
-https://kodi.lyhnemail.com/streamer/stream/1196723330/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/1196723330/manifest.mpd
 #EXTINF:-1 tvg-id="67dfc49d572320160262022fad066cc4" tvg-name="Radio4" tvg-chno="420" group-title="TV",Radio4
-https://kodi.lyhnemail.com/streamer/stream/499441511/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/499441511/manifest.mpd
 #EXTINF:-1 tvg-id="ec6ced1bec126aa2855556328f38669d" tvg-name="Pop FM" tvg-chno="421" group-title="TV",Pop FM
-https://kodi.lyhnemail.com/streamer/stream/468544748/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/468544748/manifest.mpd
 #EXTINF:-1 tvg-id="b315ab1c3ad3b72f6c7e864318ecd6ca" tvg-name="NDR 1" tvg-chno="422" group-title="TV",NDR 1
-https://kodi.lyhnemail.com/streamer/stream/480974259/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/480974259/manifest.mpd
 #EXTINF:-1 tvg-id="716720161bf0060bf1757414f7d62285" tvg-name="NDR 2" tvg-chno="423" group-title="TV",NDR 2
-https://kodi.lyhnemail.com/streamer/stream/371222385/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/371222385/manifest.mpd
 #EXTINF:-1 tvg-id="101b9cde375085a1a37c90f02c4a4455" tvg-name="NDR Kultur" tvg-chno="424" group-title="TV",NDR Kultur
-https://kodi.lyhnemail.com/streamer/stream/1587288848/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/1587288848/manifest.mpd
 #EXTINF:-1 tvg-id="d35b40de556eb83dc1e5ab936d7196c2" tvg-name="Radio Slesvig Holsten" tvg-chno="425" group-title="TV",Radio Slesvig Holsten
-https://kodi.lyhnemail.com/streamer/stream/1581276115/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/1581276115/manifest.mpd
 #EXTINF:-1 tvg-id="6fed1d13cfc21299576efb19c7ebec47" tvg-name="RTL Radio" tvg-chno="426" group-title="TV",RTL Radio
-https://kodi.lyhnemail.com/streamer/stream/320728431/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/320728431/manifest.mpd
 #EXTINF:-1 tvg-id="d228f4cfffd61681d4cdf76ed64418fe" tvg-name="BBC World Service" tvg-chno="427" group-title="TV",BBC World Service
-https://kodi.lyhnemail.com/streamer/stream/1341401298/index.m3u8
+https://kodi.lyhnemail.com/streamer/stream/1341401298/manifest.mpd

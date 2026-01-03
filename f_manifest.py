@@ -113,20 +113,26 @@ def ffmpeg_filter_complex(profiles=PROFILES):
     Build the filter_complex string for multiple quality profiles.
     Returns a single string suitable for passing to -filter_complex.
     """
-    filter_parts = [f"[0:v]bwdif,scale=-1:{p['height']},fps=25[{p['name']}]" for p in profiles]
+    filter_parts = []
+    for p in profiles:
+        # use 'ih' if height is None to keep original resolution
+        height = p['height'] if p['height'] is not None else 'ih'
+        filter_parts.append(f"[0:v]bwdif=mode=0:parity=auto,scale=-2:{height},fps=25[{p['name']}]")
+    
     return "; ".join(filter_parts)
-
 
 def ffmpeg_quality_settings(out_dir, uuid, profile, output):
     args =  []
     #need to add mapping for each quality
     if output == "HLS":
+        height = profile['height'] if profile['height'] is not None else 'ih'
         args += [
             "-map", "0:v:0",
             "-map", "0:a:0",
             "-map", "-0:s",
             # set the profile specific settings
-            "-vf", f"bwdif=mode=0:parity=auto,scale=-2:{profile['height']},fps=25",
+
+            "-vf", f"bwdif=mode=0:parity=auto,scale=-2:{height},fps=25",
         ]
     elif output == "DASH":
         args += [

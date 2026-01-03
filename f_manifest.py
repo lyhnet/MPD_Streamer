@@ -419,7 +419,7 @@ app.mount(
 @app.get("/playlist")
 def serve_playlist():
     try:
-        path = "steamer.m3u"
+        path = "streamer.m3u"
         # Get file extension
         _, ext = os.path.splitext(path)
         return FileResponse(path, media_type=get_MIME_Type(ext))

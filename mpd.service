@@ -7,7 +7,7 @@ After=network.target
 User=tvheadend
 Group=tvheadend
 WorkingDirectory=/var/www/html/MPD_Streamer
-ExecStart=/usr/bin/python3 -m uvicorn f_manifest:app --host 0.0.0.0 --port 5000
+ExecStart=/var/www/html/MPD_Streamer/venv/bin/python /var/www/html/MPD_Streamer/f_manifest.py
 Restart=on-failure
 RestartSec=5
 

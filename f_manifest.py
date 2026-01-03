@@ -74,7 +74,7 @@ baseURL = os.getenv("baseURL")
 
 
 PROFILES = [
-    {"name": "hq", "height": 720, "crf": 21, "maxrate": 6000, "preset": "fast"},
+    {"name": "hq", "height": -2, "crf": 21, "maxrate": 6000, "preset": "fast"},
     {"name": "mq", "height": 540, "crf": 25, "maxrate": 3500, "preset": "veryfast"},
     {"name": "lq", "height": 360, "crf": 27, "maxrate": 1800, "preset": "ultrafast"},
 ]
@@ -126,7 +126,7 @@ def ffmpeg_quality_settings(out_dir, uuid, profile, output):
             "-map", "0:a:0",
             "-map", "-0:s",
             # set the profile specific settings
-            "-vf", f"bwdif=mode=0:parity=auto,scale=-1:{profile['height']},fps=25",
+            "-vf", f"bwdif=mode=0:parity=auto,scale=-2:{profile['height']},fps=25",
         ]
     elif output == "DASH":
         args += [

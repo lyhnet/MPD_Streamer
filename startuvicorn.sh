@@ -5,4 +5,4 @@
 cd /var/www/html/MPD_Streamer
 
 # Start Uvicorn
-uvicorn f_manifest:app --host 0.0.0.0 --port 5000
+python3 -m uvicorn f_manifest:app --host 0.0.0.0 --port 5000

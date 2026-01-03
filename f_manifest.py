@@ -415,6 +415,17 @@ app.mount(
     name="shaka"
 )
 
+# This triggers the start-up of an HLS stream with ffmpeg
+@app.get("/playlist")
+def serve_playlist():
+    try:
+        path = "steamer.m3u"
+        # Get file extension
+        _, ext = os.path.splitext(path)
+        return FileResponse(path, media_type=get_MIME_Type(ext))
+    except RuntimeError as e:
+        raise HTTPException(status_code=404, detail=str(e))    
+
 
 @app.get("/stream/{uuid}/{segment}")
 def serve_segment(uuid: str, segment: str, request: Request):
@@ -463,6 +474,8 @@ def get_MIME_Type(ext: str) -> str:
         return "application/vnd.apple.mpegurl"
     elif ext == ".mpd":
         return "application/dash+xml"
+    elif ext == ".m3u":
+        return "audio/x-mpegurl"  # added support for .m3u    
     else:
         return "application/octet-stream"
 

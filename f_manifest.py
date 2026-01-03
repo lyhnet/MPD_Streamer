@@ -12,11 +12,9 @@ from fastapi import Request
 from dotenv import load_dotenv
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
-
-
-
-
 import logging
+import uvicorn
+
 
 # Configure logger
 logging.basicConfig(
@@ -620,9 +618,11 @@ def purge_stream_dir():
 
     logger.info(f"[STARTUP] Finished purging {STREAM_DIR}")
 
-@app.on_event("startup")
-def startup_event():
-    purge_stream_dir()
+
 
 
 threading.Thread(target=monitor_inactivity, daemon=True).start()
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host=os.getenv("UVICORN_HOST", "0.0.0.0"), port=int(os.getenv("UVICORN_PORT", 5000)))

@@ -146,6 +146,7 @@ def ffmpeg_quality_settings(out_dir, uuid, profile, output):
         if profile["height"] > 0:
             vf = f"bwdif=mode=0:parity=auto,scale=-2:{profile['height']},fps=25"
         else:
+            logging.debug("🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥 Using original resolution")
             vf = "bwdif=mode=0:parity=auto,fps=25"
         args += [
             "-map", "0:v:0",

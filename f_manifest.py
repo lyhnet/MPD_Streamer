@@ -198,8 +198,7 @@ def ffmpeg_common_args(streamURL, profile, output):
         "-analyzeduration", "2M",
 
         "-i", streamURL,
-
-        "-vsync", "cfr",
+        "-fps_mode", "cfr",
         ]
 
     if output == "HLS":
@@ -233,7 +232,7 @@ def ffmpeg_common_args(streamURL, profile, output):
         # GOP
         "-g", "100",
         "-keyint_min", "100",
-        "-force_key_frames", "expr:gte(t,n_forced*4)",
+        #"-force_key_frames", "expr:gte(t,n_forced*4)",
         ]
     return args
 

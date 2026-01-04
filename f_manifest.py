@@ -58,7 +58,7 @@ flagged_uuids = {}    # (client_id, uuid) => timed out client : kicked due to no
 
 
 #Global cleanup settings
-MIN_FREE_BYTES=5*1024*1024*1024-50*1024*1024   # 5GB-200MB
+MIN_FREE_BYTES=200*1024*1024   # 5GB-200MB
 MAX_DELETE_SEGMENTS = 100   # X: max segments to delete per cleanup run
 
 #MPD=True

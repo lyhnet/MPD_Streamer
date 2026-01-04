@@ -588,6 +588,7 @@ def cleanup_worker_global(
     base_folder=STREAM_DIR,
     min_free_bytes=MIN_FREE_BYTES
 ):
+    logging.info("🔥 Global cleanup worker thread STARTED")
     while not shutdown_event.is_set():
         try:
             # Check free space FIRST

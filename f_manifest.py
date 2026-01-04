@@ -312,14 +312,15 @@ def write_master_playlist(out_dir, profiles):
         bandwidth = int(p["maxrate"] * 1000)
 
         if p["height"] > 0:
+            # scaled profile → calculate width from 16:9
             width = int(p["height"] * 16 / 9)
             content += (
                 f"#EXT-X-STREAM-INF:BANDWIDTH={bandwidth},"
                 f"RESOLUTION={width}x{p['height']}\n"
             )
         else:
-            # HQ / source quality → no RESOLUTION
-            content += f"#EXT-X-STREAM-INF:BANDWIDTH={bandwidth}\n"
+            # HQ / source quality → force 1080i
+            content += f"#EXT-X-STREAM-INF:BANDWIDTH={bandwidth},RESOLUTION=1920x1080\n"
 
         content += f"{p['name']}.m3u8\n"
 

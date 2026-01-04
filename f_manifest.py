@@ -34,21 +34,8 @@ logger.info("Loaded .env file")
 
 shutdown_event = threading.Event()
 
-app = FastAPI(root_path="/streamer")
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
-# @app.middleware("http")
-# async def log_requests(request: Request, call_next):
-#     print("REQUEST PATH:", request.url.path)
-#     response = await call_next(request)
-#     print("RESPONSE STATUS:", response.status_code)
-#     return response
 
 
 
@@ -99,7 +86,7 @@ MPD_ChunkName="chunk"
 
 cleanup_started = False
 
-
+# Application lifespan events
 
 @asynccontextmanager
 async def lifespan(app):
@@ -109,7 +96,8 @@ async def lifespan(app):
     if UseGlobalCleaner:
         threading.Thread(
             target=cleanup_worker_global,
-            daemon=True
+            daemon=True,
+            name="GlobalCleanupWorker"
         ).start()
         logging.info("Global cleanup started")
 
@@ -123,6 +111,16 @@ async def lifespan(app):
     # ---- Shutdown ----
     logging.info("Application shutting down")
 
+# app definition
+app = FastAPI(root_path="/streamer", lifespan=lifespan)
+
+# middleware for CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 def SourceStreamURL(uuid: str):

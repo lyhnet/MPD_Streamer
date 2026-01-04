@@ -142,19 +142,13 @@ def ffmpeg_quality_settings(out_dir, uuid, profile, output):
     #need to add mapping for each quality
     if output == "HLS":
         height = profile['height'] if profile['height'] is not None else 'ih'
-        #if height is -2 we do not scale because -2:-2 causes wrong information in m3u8 master file which prevents playback of quality with original resolution
-        if profile["height"] > 0:
-            vf = f"bwdif=mode=0:parity=auto,scale=-2:{profile['height']},fps=25"
-        else:
-            logging.debug("🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥 Using original resolution")
-            vf = "bwdif=mode=0:parity=auto,fps=25"
         args += [
             "-map", "0:v:0",
             "-map", "0:a:0",
             "-map", "-0:s",
             # set the profile specific settings
 
-            "-vf", vf,
+            "-vf", f"bwdif=mode=0:parity=auto,scale=-2:{height},fps=25",
         ]
     elif output == "DASH":
         args += [
@@ -315,15 +309,23 @@ def write_master_playlist(out_dir, profiles):
     content = "#EXTM3U\n#EXT-X-VERSION:3\n"
 
     for p in profiles:
-        # Calculate approximate bandwidth in bits per second
-        bandwidth = int(p["maxrate"] * 1000)  # maxrate is in k, HLS expects bps
-        # Approximate width assuming 16:9 aspect ratio
-        width = int(p["height"] * 16 / 9)
-        content += f"#EXT-X-STREAM-INF:BANDWIDTH={bandwidth},RESOLUTION={width}x{p['height']}\n"
+        bandwidth = int(p["maxrate"] * 1000)
+
+        if p["height"] > 0:
+            width = int(p["height"] * 16 / 9)
+            content += (
+                f"#EXT-X-STREAM-INF:BANDWIDTH={bandwidth},"
+                f"RESOLUTION={width}x{p['height']}\n"
+            )
+        else:
+            # HQ / source quality → no RESOLUTION
+            content += f"#EXT-X-STREAM-INF:BANDWIDTH={bandwidth}\n"
+
         content += f"{p['name']}.m3u8\n"
 
     with open(f"{out_dir}/index.m3u8", "w") as f:
         f.write(content)
+
 
 
 # for mpeg dash

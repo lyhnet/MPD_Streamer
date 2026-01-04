@@ -125,7 +125,6 @@ app.add_middleware(
 
 def SourceStreamURL(uuid: str):
     return f"{TVHURL.rstrip('/')}:{TVHPort}/stream/channelid/{uuid}?profile=pass"
-
 def ffmpeg_filter_complex(profiles=PROFILES):
     """
     Build the filter_complex string for multiple quality profiles.
@@ -138,19 +137,23 @@ def ffmpeg_filter_complex(profiles=PROFILES):
         filter_parts.append(f"[0:v]bwdif=mode=0:parity=auto,scale=-2:{height},fps=25[{p['name']}]")
     
     return "; ".join(filter_parts)
-
 def ffmpeg_quality_settings(out_dir, uuid, profile, output):
     args =  []
     #need to add mapping for each quality
     if output == "HLS":
         height = profile['height'] if profile['height'] is not None else 'ih'
+        #if height is -2 we do not scale because -2:-2 causes wrong information in m3u8 master file which prevents playback of quality with original resolution
+        if profile["height"] > 0:
+            vf = f"bwdif=mode=0:parity=auto,scale=-2:{profile['height']},fps=25"
+        else:
+            vf = "bwdif=mode=0:parity=auto,fps=25"
         args += [
             "-map", "0:v:0",
             "-map", "0:a:0",
             "-map", "-0:s",
             # set the profile specific settings
 
-            "-vf", f"bwdif=mode=0:parity=auto,scale=-2:{height},fps=25",
+            "-vf", vf,
         ]
     elif output == "DASH":
         args += [
@@ -190,8 +193,8 @@ def ffmpeg_common_args(streamURL, profile, output):
         "-loglevel", "warning",
         "-stats",
 
-        "-fflags", "+discardcorrupt+genpts+igndts+nobuffer",
-        "-avoid_negative_ts", "make_zero",
+            "-fflags", "+discardcorrupt+genpts+igndts+nobuffer",
+            "-avoid_negative_ts", "make_zero",
         "-err_detect", "ignore_err",
         "-max_interleave_delta", "0",
         "-probesize", "2M",
@@ -235,7 +238,6 @@ def ffmpeg_common_args(streamURL, profile, output):
         #"-force_key_frames", "expr:gte(t,n_forced*4)",
         ]
     return args
-
 def ffmpeg_output_args(out_dir, uuid, profile, output: str):
     if output == "HLS":
         base = PlaylistURL(uuid)

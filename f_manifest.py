@@ -68,8 +68,8 @@ baseURL = os.getenv("baseURL")
 
 
 PROFILES = [
-    {"name": "hq", "height": -2, "crf": 21, "maxrate": 6000, "preset": "fast"},
-    {"name": "mq", "height": 720, "crf": 23, "maxrate": 3500, "preset": "veryfast"},
+    {"name": "hq", "height": -2, "crf": 22, "maxrate": 12000, "preset": "ultrafast"},
+    {"name": "mq", "height": 720, "crf": 23, "maxrate": 3500, "preset": "ultrafast"},
     {"name": "lq", "height": 540, "crf": 25, "maxrate": 1800, "preset": "ultrafast"},
 ]
 
@@ -188,8 +188,8 @@ def ffmpeg_common_args(streamURL, profile, output):
         "-loglevel", "warning",
         "-stats",
 
-            "-fflags", "+discardcorrupt+genpts+igndts+nobuffer",
-            "-avoid_negative_ts", "make_zero",
+        "-fflags", "+discardcorrupt+genpts+igndts+nobuffer",
+        "-avoid_negative_ts", "make_zero",
         "-err_detect", "ignore_err",
         "-max_interleave_delta", "0",
         "-probesize", "2M",

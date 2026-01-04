@@ -68,9 +68,9 @@ baseURL = os.getenv("baseURL")
 
 
 PROFILES = [
-    {"name": "hq", "height": -2, "crf": 22, "maxrate": 12000, "preset": "ultrafast"},
+    {"name": "hq", "height": -2, "crf": 22, "maxrate": 8500, "preset": "ultrafast"},
     {"name": "mq", "height": 720, "crf": 23, "maxrate": 3500, "preset": "ultrafast"},
-    {"name": "lq", "height": 540, "crf": 25, "maxrate": 1800, "preset": "ultrafast"},
+    {"name": "lq", "height": 540, "crf": 27, "maxrate": 1800, "preset": "ultrafast"},
 ]
 
 

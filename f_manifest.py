@@ -218,6 +218,7 @@ def ffmpeg_common_args(streamURL, profile, output):
         "-c:v", "libx264",
         "-x264-params", "ref=4",
         "-x264opts", "keyint=48:min-keyint=1:scenecut=0",
+
         "-tune", "zerolatency",
 
         "-profile:v", "high",
@@ -232,6 +233,7 @@ def ffmpeg_common_args(streamURL, profile, output):
         # GOP
         "-g", "100",
         "-keyint_min", "100",
+        "-force_key_frames", "expr:gte(t,n_forced*4)",
         ]
     return args
 

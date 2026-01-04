@@ -8,12 +8,15 @@ import subprocess
 import os
 import time
 import threading
+from contextlib import asynccontextmanager
 from fastapi import Request
 from dotenv import load_dotenv
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
 import logging
 import uvicorn
+from collections import deque
+
 
 
 # Configure logger
@@ -29,6 +32,7 @@ logger = logging.getLogger("myapp")
 load_dotenv()  # loads .env
 logger.info("Loaded .env file")
 
+shutdown_event = threading.Event()
 
 app = FastAPI(root_path="/streamer")
 
@@ -66,8 +70,11 @@ sessions = {}           # (uuid) -> [timestamp of last killed stream, ua]
 flagged_uuids = {}    # (client_id, uuid) => timed out client : kicked due to no segment request
 
 
-MIN_FREE_BYTES=200000000
-MPD=True
+#Global cleanup settings
+MIN_FREE_BYTES=5*1024*1024*1024-50*1024*1024   # 5GB-200MB
+MAX_DELETE_SEGMENTS = 100   # X: max segments to delete per cleanup run
+
+#MPD=True
 TVHURL=os.getenv("TVHURL")
 TVHPort=os.getenv("TVHPort")
 baseURL = os.getenv("baseURL")
@@ -92,17 +99,30 @@ MPD_ChunkName="chunk"
 
 cleanup_started = False
 
-# Startup event for any background tasks
-@app.on_event("startup")
-def start_background_tasks():
-  purge_stream_dir()
-  global cleanup_started
-  if UseGlobalCleaner and not cleanup_started:
-    # Start the global cleanup worker thread
-    threading.Thread(target=cleanup_worker_global, daemon=True).start()
-    cleanup_started = True
-  # Start the activity monitor
-  threading.Thread(target=monitor_inactivity, daemon=True).start()
+
+
+@asynccontextmanager
+async def lifespan(app):
+    # ---- Startup ----
+    purge_stream_dir()
+
+    if UseGlobalCleaner:
+        threading.Thread(
+            target=cleanup_worker_global,
+            daemon=True
+        ).start()
+        logging.info("Global cleanup started")
+
+    threading.Thread(
+        target=monitor_inactivity,
+        daemon=True
+    ).start()
+
+    yield
+
+    # ---- Shutdown ----
+    logging.info("Application shutting down")
+
 
 
 def SourceStreamURL(uuid: str):
@@ -495,8 +515,7 @@ def PlaylistURL(uuid):
 
 def monitor_inactivity(timeout=InactivityTimeOut):
     while True:
-        logger.debug("Monitor_inactivity looped")
-        logger.debug(f"processes keys = {list(processes.keys())}")
+        logger.debug(f"Monitor_inactivity looped: Processes keys = {list(processes.keys())}")
         now = time.time()
 
         #monitor if client is requesting segments
@@ -565,31 +584,85 @@ def ua(request: Request) -> str: # returns the user agent and header from reques
     )
 
 
-def cleanup_worker_global(base_folder=STREAM_DIR, min_free_bytes=MIN_FREE_BYTES):
-    while True:
-        now = time.time()
-        files = []
+def cleanup_worker_global(
+    base_folder=STREAM_DIR,
+    min_free_bytes=MIN_FREE_BYTES
+):
+    while not shutdown_event.is_set():
+        try:
+            # Check free space FIRST
+            usage = shutil.disk_usage(base_folder)
+            free_before = usage.free
 
-        # Recursively collect all deletable segment files
-        for root, dirs, filenames in os.walk(base_folder):
-            for f in filenames:
-                if f.endswith(".ts") or (f.endswith(".m4s") and f.startswith(f"{MPD_ChunkName}-")):
-                    files.append(os.path.join(root, f))
+            logging.debug(
+                "Cleanup check: free=%d MB, threshold=%d MB",
+                free_before // (1024 * 1024),
+                min_free_bytes // (1024 * 1024),
+            )
 
-        # Sort by modification time (oldest first)
-        files.sort(key=lambda x: os.path.getmtime(x))
+            # If enough space, do nothing
+            if free_before >= min_free_bytes:
+                shutdown_event.wait(30)
+                continue
 
-        # Delete oldest files if RAMDrive is running out of space
-        while shutil.disk_usage(base_folder).free < min_free_bytes and files:
-            oldest = files.pop(0)
-            try:
-                os.remove(oldest)
-            except FileNotFoundError:
-                pass
+            logging.debug("Free space below threshold — starting cleanup scan")
 
-        # Wait before next scan
-        time.sleep(60)  # run once per minute
+            # Collect deletable files (only when needed)
+            files = []
 
+            for root, _, filenames in os.walk(base_folder):
+                if shutdown_event.is_set():
+                    return
+
+                for f in filenames:
+                    if (
+                        f.endswith(".ts")
+                        or (f.endswith(".m4s") and f.startswith(f"{MPD_ChunkName}-"))
+                    ):
+                        files.append(os.path.join(root, f))
+
+            if not files:
+                logging.debug("No deletable files found")
+                shutdown_event.wait(30)
+                continue
+
+            # Sort oldest first
+            files.sort(key=os.path.getmtime)
+            files = deque(files)
+
+            # Decide how many files to delete
+            total_files = len(files)
+
+            if total_files >= 2 * MAX_DELETE_SEGMENTS:
+                delete_count = 100
+            else:
+                delete_count = total_files // 2
+
+            logging.debug(
+                "Cleanup decision: total_files=%d, delete_count=%d",
+                total_files,
+                delete_count,
+            )
+
+            # Delete selected files (oldest first)
+            for _ in range(delete_count):
+                if shutdown_event.is_set():
+                    return
+
+                try:
+                    oldest = files.popleft()
+                    os.remove(oldest)
+                    logging.debug("Deleted segment: %s", oldest)
+                except FileNotFoundError:
+                    pass
+                except Exception as e:
+                    logging.warning("Failed to delete %s: %s", oldest, e)
+
+
+        except Exception:
+            logging.exception("Cleanup error")
+
+        shutdown_event.wait(30)
 
 
 def cleanup_worker(uuid, lifetime=720):

@@ -1,13 +1,19 @@
 import requests
 import json
-
+from urllib.parse import urljoin
+import os
+from urllib.parse import urljoin
 # Replace this with your TVHeadend/Kodi endpoint
-URL = "http://hts:hts@kodi.lyhnemail.com:19981/api/channel/grid"  # or the URL you have
-PlayURL="http://hts:hts@kodi.lyhnemail.com:19981/stream/channelid/{uuid}?profile=pass"
 
+
+TVH_URL="http://hts:hts@kodi.lyhnemail.com:19981"
+API_URL = f"{TVH_URL}/api/channel/grid"
+PlayURL = f"{TVH_URL}/play/ticket/stream/channel/{{uuid}}"
+BaseURL = "https://lyhnemail.com/streamer/"
 
 def create_url(uuid):
     return PlayURL.format(uuid=uuid)
+
 
 try:
     # Fetch the data
@@ -16,16 +22,29 @@ try:
     data = response.json()
 
     # Convert into structured CHANNELS format with playback URL
-    CHANNELS = [
-        {
+    entries = data.get("entries", [])
+
+    def _num_val(n):
+        try:
+            return int(n)
+        except (TypeError, ValueError):
+            try:
+                return int(float(n))
+            except (TypeError, ValueError):
+                return float("inf")
+
+    sorted_entries = sorted(entries, key=lambda e: _num_val(e.get("number")))
+
+    CHANNELS = []
+    for idx, entry in enumerate(sorted_entries, start=1):
+        CHANNELS.append({
             "id": entry["uuid"],
-            "name": entry["name"],
-            "logo": entry.get("icon"),
-            #"group": entry.get("bouquet", ""),
+            "number": entry.get("number"),
+            "channelnumber": idx,
+            "name": entry.get("name"),
+            "logo": f"{BaseURL.rstrip('/')}/picons/{entry.get('icon_public_url', '').lstrip('/')}",
             "url": create_url(entry["uuid"])
-        }
-        for entry in data.get("entries", [])
-    ]
+        })
 
     # Save to JSON file
     with open("channels.json", "w") as f:

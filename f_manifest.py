@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query, Request, HTTPException, Depends
 from fastapi.responses import FileResponse
 import xml.etree.ElementTree as ET
 from fastapi import HTTPException, Response
@@ -16,14 +16,20 @@ from fastapi.responses import JSONResponse
 import logging
 import uvicorn
 from collections import deque
-
-
+import json
+import jwt
+from fastapi.responses import HTMLResponse, JSONResponse, StreamingResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+import httpx
+from urllib.parse import urljoin
 
 # Configure logger
 logging.basicConfig(
     level=logging.DEBUG,  # default level
     format="%(asctime)s [%(levelname)s] %(message)s"
 )
+
 
 
 logger = logging.getLogger("myapp")
@@ -39,14 +45,14 @@ shutdown_event = threading.Event()
 
 
 
+
+
 # Dummy authentication
 USERS = {"crap@lyhnemail.com": "rBeef7D7CHbjb1"}
 
-# Example channel list
-CHANNELS = [
-    {"name": "DR1", "stream_url": "http://tvheadend:19981/stream/channel1"},
-    {"name": "DR2", "stream_url": "http://tvheadend:19981/stream/channel2"},
-]
+# Load CHANNELS from a JSON file
+with open("tvheadendstuff/channels.json", "r") as f:
+    CHANNELS = json.load(f)
 
 
 
@@ -62,8 +68,7 @@ MIN_FREE_BYTES=200*1024*1024   # 5GB-200MB
 MAX_DELETE_SEGMENTS = 100   # X: max segments to delete per cleanup run
 
 #MPD=True
-TVHURL=os.getenv("TVHURL")
-TVHPort=os.getenv("TVHPort")
+TVHURL = f"{os.getenv('TVHURL').rstrip('/')}:{os.getenv('TVHPort')}"
 baseURL = os.getenv("baseURL")
 
 
@@ -84,7 +89,14 @@ MPD_InitSegName="init"
 MPD_ChunkName="chunk"
 
 
+# Optional TVHeadend auth (remove if not needed)
+TVH_AUTH = httpx.BasicAuth("hts", "hts")  # replace with your TVH username/password
+# Reusable async HTTP client
+client = httpx.AsyncClient(timeout=10)
+
+
 cleanup_started = False
+
 
 # Application lifespan events
 
@@ -123,8 +135,85 @@ app.add_middleware(
 )
 
 
+
+#website to stream HLS/DASH manifests
+
+# JWT settings
+JWT_SECRET = "CHANGE_ME"
+JWT_ALG = "HS256"
+HLS_TOKEN_TTL = 120  # seconds
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/castjs", StaticFiles(directory="../castjs"), name="castjs")
+app.mount("/images", StaticFiles(directory="images"), name="images")
+templates = Jinja2Templates(directory="templates")
+
+# ---- Fake session dependency (replace with real one) ----
+def get_current_user(request: Request):
+    # assume user is logged in via OAuth
+    # normally you'd read session cookie + DB/Redis
+    return {"user_id": "user123"}
+
+@app.get("/player", response_class=HTMLResponse)
+def player_page(request: Request, user=Depends(get_current_user)):
+    return templates.TemplateResponse(
+        "player.html",
+        {"request": request},
+    )
+
+
+@app.get("/api/channels")
+def list_channels(user=Depends(get_current_user)):
+    return CHANNELS
+
+
+@app.post("/api/hls-token")
+def create_hls_token(channel_id: str, user=Depends(get_current_user)):
+    payload = {
+        "sub": user["user_id"],
+        "channel": channel_id,
+        "exp": int(time.time()) + HLS_TOKEN_TTL,
+    }
+
+    token = jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALG)
+    return {"token": token}
+
+
+@app.get("/picons/imagecache/{image_id:int}")
+async def proxy_picon(image_id: int):
+    url = f"{TVHURL}/imagecache/{image_id}"
+    logging.debug(f"Fetching picon from TVH: {url}")
+    resp = await client.get(url, auth=TVH_AUTH)
+
+    if resp.status_code != 200:
+        raise HTTPException(status_code=resp.status_code)
+
+    return StreamingResponse(
+        resp.aiter_bytes(),
+        media_type=resp.headers.get("content-type", "image/png"),
+        headers={
+            # 1️⃣ Aggressive caching (7 days, immutable)
+            "Cache-Control": "public, max-age=604800, immutable"
+        }
+    )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def SourceStreamURL(uuid: str):
-    return f"{TVHURL.rstrip('/')}:{TVHPort}/stream/channelid/{uuid}?profile=pass"
+    return f"{TVHURL.rstrip('/')}/play/ticket/stream/channel/{uuid}?profile=pass"
 def ffmpeg_filter_complex(profiles=PROFILES):
     """
     Build the filter_complex string for multiple quality profiles.
@@ -406,7 +495,7 @@ def get_playlist(uuid: str, output: str, request: Request) -> str:
         time.sleep(0.1)
 
     # If still no real m3u8 → fail properly (player will retry)
-    logger.info("M3U8 (HLS) not created in due course")
+    logger.info(f"Playlist ({output}) not created in due course")
     raise ValueError(f"Playlist not ready in due course: {output}")
 
 # This triggers the start-up of an HLS stream with ffmpeg
@@ -433,19 +522,6 @@ def serve_manifest_mpd(uuid: str, request: Request):
         raise HTTPException(status_code=404, detail=str(e)) 
 
     
-
-app.mount(
-    "/player/",
-    StaticFiles(directory="player/", html=True),
-    name="player"
-)
-
-app.mount(
-    "/shaka/",
-    StaticFiles(directory="shaka/", html=True),
-    name="shaka"
-)
-
 # This triggers the start-up of an HLS stream with ffmpeg
 @app.get("/playlist")
 def serve_playlist():
@@ -515,7 +591,7 @@ def is_segment_file(filename: str) -> bool:
     return filename.endswith((".ts", ".m4s"))  # HLS TS or DASH/fMP4
 
 def PlaylistURL(uuid):
-    return os.path.join(baseURL, uuid)
+    return urljoin(baseURL, f"streamer/stream/{uuid}")
 
 
 def monitor_inactivity(timeout=InactivityTimeOut):

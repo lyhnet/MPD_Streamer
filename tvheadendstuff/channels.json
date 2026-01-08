@@ -1,302 +1,402 @@
 [
     {
-        "id": "47f8c60196219f3ca8a03a90de020a6e",
-        "name": "Eurosport 1",
-        "logo": "picon://1_0_19_870_D_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "cbc47282900048f0e2fa8b919fd84edf",
-        "name": "Discovery Channel",
-        "logo": "picon://1_0_19_9C4_E_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "d61afc02623fabc7994a5b7a6694396d",
-        "name": "Nick JR",
-        "logo": "picon://1_0_16_A28_11_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "09137e895038e981d5c0f52795a1e953",
-        "name": "TV4 SE",
-        "logo": "picon://1_0_19_A14_18A_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "abcabf0a8f56194903c0164d54674373",
-        "name": "DR Ramasjang",
-        "logo": "picon://1_0_16_668_15A_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "a87bd08b49cac5c5ddef5394c75e1ca3",
-        "name": "Kanal 4",
-        "logo": "picon://1_0_19_DDE_272_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "9662ff0dac3064e39ae9677991ba1111",
-        "name": "National Geographic ch.",
-        "logo": "picon://1_0_19_884_302_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "baf78a0e74d6c527e2daf9837d31a925",
-        "name": "Uptown Classic",
-        "logo": "picon://1_0_19_DD4_A_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "453dd30fe6d8c019829064cb158a90b5",
-        "name": "Nickelodeon",
-        "logo": "picon://1_0_19_898_B_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "366fb3115a13f96af0a20b66772da7dd",
-        "name": "TV3 MAX",
-        "logo": "picon://1_0_19_ADC_2B2_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "9dc9ca1135e4eba31aa1056134e90002",
-        "name": "Kanal 5",
-        "logo": "picon://1_0_19_852_A_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "9dc28592989411a81ff13b868ae53d57",
-        "name": "Das Erste",
-        "logo": "picon://1_0_19_6C2_17A_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "ac3d4b166d8e8eac06e0fad0271f331b",
-        "name": "TV SYD+",
-        "logo": "picon://1_0_19_7C6_172_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "8eba97989ba2ed48a331fe0c489cd28c",
-        "name": "ZDF",
-        "logo": "picon://1_0_19_6D6_17A_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "0156941a6a8ae9953b05c5170f8217aa",
-        "name": "NRK1",
-        "logo": "picon://1_0_19_73A_18A_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "b42cb51ab4b6ce30774034c21beefcc1",
-        "name": "TV3+ HD (DK)",
-        "logo": "picon://1_0_19_82A_9_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "0920299e5dad4a4f04ac88c6d2a7b7da",
-        "name": "Sport Live",
-        "logo": "picon://1_0_19_6E0_D_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "df459a9fd1dcee01b5cbfb2384dbab6d",
-        "name": "TV2 Charlie",
-        "logo": "picon://1_0_19_834_9_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "d55ccf1fdd71ff262b237ce26214175a",
-        "name": "TV2 Fri",
-        "logo": "picon://1_0_19_AFA_2B2_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "18598022af990936db67ba34d37f462b",
-        "name": "Viasat History",
-        "logo": "picon://1_0_19_942_F_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "107082a3b89ab12906785cea64dd853e",
-        "name": "Investigation Discovery",
-        "logo": "picon://1_0_19_D34_F_1_FFFF0000_0_0_0.png",
-        "group": ""
+        "id": "5a9788b740b690dcc6e3183c75a6fbc7",
+        "number": 1,
+        "channelnumber": 1,
+        "name": "DR1",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/163",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/5a9788b740b690dcc6e3183c75a6fbc7"
     },
     {
         "id": "b809c6292cda6a6c1f9d1ad7571e98be",
+        "number": 2,
+        "channelnumber": 2,
         "name": "DR2",
-        "logo": "picon://1_0_19_654_162_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "bb732f2ad151ba1ea0e4e12a26aade29",
-        "name": "TV2 Echo",
-        "logo": "picon://1_0_19_B04_B_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "aa038faaa690edb9c161bbf11f6f810c",
-        "name": "ProSieben",
-        "logo": "picon://1_0_1_712_182_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "a7c63bacfa0fd4dddaddaaa638c82178",
-        "name": "dk4",
-        "logo": "picon://1_0_19_85C_A_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "5461582c905f803616c16e4d4d4c0a89",
-        "name": "Folketinget",
-        "logo": "picon://1_0_19_7F8_162_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "22faca2d269e984dfe8e9bb051601afd",
-        "name": "MTV Nordic",
-        "logo": "picon://1_0_19_9EC_302_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "e295bbb044767c5525ef3f11cbb5d300",
-        "name": "Pr\u00f8vekanal",
-        "logo": "picon://1_0_1_80C_172_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "5a9788b740b690dcc6e3183c75a6fbc7",
-        "name": "DR1",
-        "logo": "picon://1_0_19_259_192_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "50a3053843a7c19ac88bf2fa5c3b367e",
-        "name": "SAT.1",
-        "logo": "picon://1_0_1_708_182_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "40733138d830f6fb7c47291ecd362ea4",
-        "name": "3sat",
-        "logo": "picon://1_0_19_7B2_18A_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "4c615bbd0be27430c82b64d46b545c50",
-        "name": "TV2 SPORT X",
-        "logo": "picon://1_0_19_654_F_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "45cd97bdc2868089052bec341afc8448",
-        "name": "Disney Channel",
-        "logo": "picon://1_0_19_91A_E_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "4276f1be48e51dcdc78c2c410aa02d81",
-        "name": "Viaplay Sport News",
-        "logo": "picon://1_0_19_1914_13A_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "1b4bf84069f8dd7c466b4293852aa7e7",
-        "name": "TV3",
-        "logo": "picon://1_0_19_816_9_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "06116dc290807158d7106fd39ddfb131",
-        "name": "TV3 Sport",
-        "logo": "picon://1_0_19_8DE_10_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "819602c3f422dc44d3e4b7a14585ae44",
-        "name": "Kanal Syd",
-        "logo": "picon://1_0_16_7E4_162_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "e6fb27c3cebbf7216d6e23013c14cf00",
-        "name": "Sky News",
-        "logo": "picon://1_0_1_8A2_A_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "67a95cc7be372168dec13a5171a1f87b",
-        "name": "Viasat Explore",
-        "logo": "picon://1_0_19_938_272_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "14c7b852d6c8da4a99ead11122ef08df",
-        "name": "SVT1",
-        "logo": "picon://1_0_19_776_14A_1_FFFF0000_0_0_0.png",
-        "group": ""
-    },
-    {
-        "id": "8309d7570902decd9002dcb421dbf9fe",
-        "name": "TV2 SPORT",
-        "logo": "picon://1_0_19_8B6_E_1_FFFF0000_0_0_0.png",
-        "group": ""
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/105",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/b809c6292cda6a6c1f9d1ad7571e98be"
     },
     {
         "id": "c7375358fc2ae2ec62f5fb70c6020e0e",
+        "number": 3,
+        "channelnumber": 3,
         "name": "TV2",
-        "logo": "picon://1_0_19_690_16A_1_FFFF0000_0_0_0.png",
-        "group": ""
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/96",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/c7375358fc2ae2ec62f5fb70c6020e0e"
     },
     {
-        "id": "34c8de59d4a07212d616ede248d3afd6",
-        "name": "SVT2",
-        "logo": "picon://1_0_19_78A_142_1_FFFF0000_0_0_0.png",
-        "group": ""
+        "id": "abcabf0a8f56194903c0164d54674373",
+        "number": 5,
+        "channelnumber": 4,
+        "name": "DR Ramasjang",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/87",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/abcabf0a8f56194903c0164d54674373"
     },
     {
-        "id": "4a01525a920f34dc96dc20023a83ebbd",
-        "name": "Deluxe Music",
-        "logo": "picon://1_0_1_726_16A_1_FFFF0000_0_0_0.png",
-        "group": ""
+        "id": "ac3d4b166d8e8eac06e0fad0271f331b",
+        "number": 8,
+        "channelnumber": 5,
+        "name": "TV SYD+",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/121",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/ac3d4b166d8e8eac06e0fad0271f331b"
     },
     {
-        "id": "b7d547ddf63128698aeec2afc07a4d6f",
-        "name": "Animal Planet",
-        "logo": "picon://1_0_19_8F2_D_1_FFFF0000_0_0_0.png",
-        "group": ""
+        "id": "1b4bf84069f8dd7c466b4293852aa7e7",
+        "number": 9,
+        "channelnumber": 6,
+        "name": "TV3",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/135",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/1b4bf84069f8dd7c466b4293852aa7e7"
     },
     {
-        "id": "2c89d85f5d6d13cedf58f39b325f31be",
-        "name": "TV5 Monde",
-        "logo": "picon://1_0_1_7A8_16A_1_FFFF0000_0_0_0.png",
-        "group": ""
+        "id": "b42cb51ab4b6ce30774034c21beefcc1",
+        "number": 10,
+        "channelnumber": 7,
+        "name": "TV3+ HD (DK)",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/91",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/b42cb51ab4b6ce30774034c21beefcc1"
     },
     {
-        "id": "dad839e44c435d0ae37395047ebb6194",
-        "name": "Viasat Golf",
-        "logo": "picon://1_0_19_97E_11_1_FFFF0000_0_0_0.png",
-        "group": ""
+        "id": "df459a9fd1dcee01b5cbfb2384dbab6d",
+        "number": 11,
+        "channelnumber": 8,
+        "name": "TV2 Charlie",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/122",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/df459a9fd1dcee01b5cbfb2384dbab6d"
     },
     {
-        "id": "e2e4d9641c77e5724d9da80315f693ad",
-        "name": "V Sport Ultra",
-        "logo": "picon://1_0_19_640_16_1_FFFF0000_0_0_0.png",
-        "group": ""
+        "id": "bb732f2ad151ba1ea0e4e12a26aade29",
+        "number": 12,
+        "channelnumber": 9,
+        "name": "TV2 Echo",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/97",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/bb732f2ad151ba1ea0e4e12a26aade29"
     },
     {
-        "id": "1231386820ef08171237d0de2835fda8",
-        "name": "NDR",
-        "logo": "picon://1_0_19_6EA_172_1_FFFF0000_0_0_0.png",
-        "group": ""
+        "id": "a7c63bacfa0fd4dddaddaaa638c82178",
+        "number": 13,
+        "channelnumber": 10,
+        "name": "dk4",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/115",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/a7c63bacfa0fd4dddaddaaa638c82178"
+    },
+    {
+        "id": "a87bd08b49cac5c5ddef5394c75e1ca3",
+        "number": 14,
+        "channelnumber": 11,
+        "name": "Kanal 4",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/89",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/a87bd08b49cac5c5ddef5394c75e1ca3"
+    },
+    {
+        "id": "9dc9ca1135e4eba31aa1056134e90002",
+        "number": 15,
+        "channelnumber": 12,
+        "name": "Kanal 5",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/136",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/9dc9ca1135e4eba31aa1056134e90002"
+    },
+    {
+        "id": "d55ccf1fdd71ff262b237ce26214175a",
+        "number": 16,
+        "channelnumber": 13,
+        "name": "TV2 Fri",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/98",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/d55ccf1fdd71ff262b237ce26214175a"
     },
     {
         "id": "e5656bed9c3618f2ec71fdbf339b1417",
+        "number": 17,
+        "channelnumber": 14,
         "name": "TV3 Puls",
-        "logo": "picon://1_0_19_8C0_2B2_1_FFFF0000_0_0_0.png",
-        "group": ""
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/93",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/e5656bed9c3618f2ec71fdbf339b1417"
+    },
+    {
+        "id": "819602c3f422dc44d3e4b7a14585ae44",
+        "number": 18,
+        "channelnumber": 15,
+        "name": "Kanal Syd",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/111",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/819602c3f422dc44d3e4b7a14585ae44"
+    },
+    {
+        "id": "5461582c905f803616c16e4d4d4c0a89",
+        "number": 19,
+        "channelnumber": 16,
+        "name": "Folketinget",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/154",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/5461582c905f803616c16e4d4d4c0a89"
+    },
+    {
+        "id": "e295bbb044767c5525ef3f11cbb5d300",
+        "number": 23,
+        "channelnumber": 17,
+        "name": "Pr\u00f8vekanal",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/155",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/e295bbb044767c5525ef3f11cbb5d300"
+    },
+    {
+        "id": "e6fb27c3cebbf7216d6e23013c14cf00",
+        "number": 32,
+        "channelnumber": 18,
+        "name": "Sky News",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/110",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/e6fb27c3cebbf7216d6e23013c14cf00"
+    },
+    {
+        "id": "47f8c60196219f3ca8a03a90de020a6e",
+        "number": 38,
+        "channelnumber": 19,
+        "name": "Eurosport 1",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/95",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/47f8c60196219f3ca8a03a90de020a6e"
+    },
+    {
+        "id": "06116dc290807158d7106fd39ddfb131",
+        "number": 39,
+        "channelnumber": 20,
+        "name": "TV3 Sport",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/86",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/06116dc290807158d7106fd39ddfb131"
+    },
+    {
+        "id": "366fb3115a13f96af0a20b66772da7dd",
+        "number": 40,
+        "channelnumber": 21,
+        "name": "TV3 MAX",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/129",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/366fb3115a13f96af0a20b66772da7dd"
+    },
+    {
+        "id": "8309d7570902decd9002dcb421dbf9fe",
+        "number": 41,
+        "channelnumber": 22,
+        "name": "TV2 SPORT",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/125",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/8309d7570902decd9002dcb421dbf9fe"
+    },
+    {
+        "id": "0920299e5dad4a4f04ac88c6d2a7b7da",
+        "number": 42,
+        "channelnumber": 23,
+        "name": "Sport Live",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/108",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/0920299e5dad4a4f04ac88c6d2a7b7da"
+    },
+    {
+        "id": "dad839e44c435d0ae37395047ebb6194",
+        "number": 45,
+        "channelnumber": 24,
+        "name": "Viasat Golf",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/82",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/dad839e44c435d0ae37395047ebb6194"
+    },
+    {
+        "id": "4c615bbd0be27430c82b64d46b545c50",
+        "number": 46,
+        "channelnumber": 25,
+        "name": "TV2 SPORT X",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/84",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/4c615bbd0be27430c82b64d46b545c50"
+    },
+    {
+        "id": "e2e4d9641c77e5724d9da80315f693ad",
+        "number": 47,
+        "channelnumber": 26,
+        "name": "V Sport Ultra",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/118",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/e2e4d9641c77e5724d9da80315f693ad"
+    },
+    {
+        "id": "4a01525a920f34dc96dc20023a83ebbd",
+        "number": 51,
+        "channelnumber": 27,
+        "name": "Deluxe Music",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/107",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/4a01525a920f34dc96dc20023a83ebbd"
+    },
+    {
+        "id": "baf78a0e74d6c527e2daf9837d31a925",
+        "number": 52,
+        "channelnumber": 28,
+        "name": "Uptown Classic",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/132",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/baf78a0e74d6c527e2daf9837d31a925"
+    },
+    {
+        "id": "22faca2d269e984dfe8e9bb051601afd",
+        "number": 53,
+        "channelnumber": 29,
+        "name": "MTV Nordic",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/128",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/22faca2d269e984dfe8e9bb051601afd"
+    },
+    {
+        "id": "9662ff0dac3064e39ae9677991ba1111",
+        "number": 60,
+        "channelnumber": 30,
+        "name": "National Geographic ch.",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/109",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/9662ff0dac3064e39ae9677991ba1111"
+    },
+    {
+        "id": "67a95cc7be372168dec13a5171a1f87b",
+        "number": 61,
+        "channelnumber": 31,
+        "name": "Viasat Explore",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/123",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/67a95cc7be372168dec13a5171a1f87b"
+    },
+    {
+        "id": "cbc47282900048f0e2fa8b919fd84edf",
+        "number": 62,
+        "channelnumber": 32,
+        "name": "Discovery Channel",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/133",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/cbc47282900048f0e2fa8b919fd84edf"
+    },
+    {
+        "id": "b7d547ddf63128698aeec2afc07a4d6f",
+        "number": 63,
+        "channelnumber": 33,
+        "name": "Animal Planet",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/116",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/b7d547ddf63128698aeec2afc07a4d6f"
+    },
+    {
+        "id": "18598022af990936db67ba34d37f462b",
+        "number": 64,
+        "channelnumber": 34,
+        "name": "Viasat History",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/112",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/18598022af990936db67ba34d37f462b"
+    },
+    {
+        "id": "107082a3b89ab12906785cea64dd853e",
+        "number": 72,
+        "channelnumber": 35,
+        "name": "Investigation Discovery",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/113",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/107082a3b89ab12906785cea64dd853e"
+    },
+    {
+        "id": "453dd30fe6d8c019829064cb158a90b5",
+        "number": 79,
+        "channelnumber": 36,
+        "name": "Nickelodeon",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/124",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/453dd30fe6d8c019829064cb158a90b5"
+    },
+    {
+        "id": "45cd97bdc2868089052bec341afc8448",
+        "number": 80,
+        "channelnumber": 37,
+        "name": "Disney Channel",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/119",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/45cd97bdc2868089052bec341afc8448"
+    },
+    {
+        "id": "d61afc02623fabc7994a5b7a6694396d",
+        "number": 81,
+        "channelnumber": 38,
+        "name": "Nick JR",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/137",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/d61afc02623fabc7994a5b7a6694396d"
+    },
+    {
+        "id": "9dc28592989411a81ff13b868ae53d57",
+        "number": 87,
+        "channelnumber": 39,
+        "name": "Das Erste",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/102",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/9dc28592989411a81ff13b868ae53d57"
+    },
+    {
+        "id": "8eba97989ba2ed48a331fe0c489cd28c",
+        "number": 88,
+        "channelnumber": 40,
+        "name": "ZDF",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/134",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/8eba97989ba2ed48a331fe0c489cd28c"
+    },
+    {
+        "id": "1231386820ef08171237d0de2835fda8",
+        "number": 89,
+        "channelnumber": 41,
+        "name": "NDR",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/92",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/1231386820ef08171237d0de2835fda8"
+    },
+    {
+        "id": "50a3053843a7c19ac88bf2fa5c3b367e",
+        "number": 91,
+        "channelnumber": 42,
+        "name": "SAT.1",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/126",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/50a3053843a7c19ac88bf2fa5c3b367e"
+    },
+    {
+        "id": "aa038faaa690edb9c161bbf11f6f810c",
+        "number": 92,
+        "channelnumber": 43,
+        "name": "ProSieben",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/83",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/aa038faaa690edb9c161bbf11f6f810c"
+    },
+    {
+        "id": "40733138d830f6fb7c47291ecd362ea4",
+        "number": 93,
+        "channelnumber": 44,
+        "name": "3sat",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/130",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/40733138d830f6fb7c47291ecd362ea4"
+    },
+    {
+        "id": "14c7b852d6c8da4a99ead11122ef08df",
+        "number": 94,
+        "channelnumber": 45,
+        "name": "SVT1",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/94",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/14c7b852d6c8da4a99ead11122ef08df"
+    },
+    {
+        "id": "34c8de59d4a07212d616ede248d3afd6",
+        "number": 95,
+        "channelnumber": 46,
+        "name": "SVT2",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/106",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/34c8de59d4a07212d616ede248d3afd6"
+    },
+    {
+        "id": "09137e895038e981d5c0f52795a1e953",
+        "number": 96,
+        "channelnumber": 47,
+        "name": "TV4 SE",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/120",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/09137e895038e981d5c0f52795a1e953"
+    },
+    {
+        "id": "0156941a6a8ae9953b05c5170f8217aa",
+        "number": 97,
+        "channelnumber": 48,
+        "name": "NRK1",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/131",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/0156941a6a8ae9953b05c5170f8217aa"
+    },
+    {
+        "id": "2c89d85f5d6d13cedf58f39b325f31be",
+        "number": 98,
+        "channelnumber": 49,
+        "name": "TV5 Monde",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/88",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/2c89d85f5d6d13cedf58f39b325f31be"
+    },
+    {
+        "id": "4276f1be48e51dcdc78c2c410aa02d81",
+        "number": 246,
+        "channelnumber": 50,
+        "name": "Viaplay Sport News",
+        "logo": "https://lyhnemail.com/streamer/picons/imagecache/162",
+        "url": "http://hts:hts@kodi.lyhnemail.com:19981/play/ticket/stream/channel/4276f1be48e51dcdc78c2c410aa02d81"
     }
 ]

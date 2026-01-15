@@ -1,102 +1,110 @@
 #EXTM3U
 #EXTXMLTV: http://kodi.lyhnemail.com:19981/xmltv/channels
-#EXTINF:-1 tvg-id="5a9788b740b690dcc6e3183c75a6fbc7" tvg-name="DR1" tvg-chno="1" group-title="TV",DR1
-https://lyhnemail.com/streamer/stream/5a9788b740b690dcc6e3183c75a6fbc7/index.m3u8
-#EXTINF:-1 tvg-id="b809c6292cda6a6c1f9d1ad7571e98be" tvg-name="DR2" tvg-chno="2" group-title="TV",DR2
-https://lyhnemail.com/streamer/stream/b809c6292cda6a6c1f9d1ad7571e98be/index.m3u8
-#EXTINF:-1 tvg-id="c7375358fc2ae2ec62f5fb70c6020e0e" tvg-name="TV2" tvg-chno="3" group-title="TV",TV2
-https://lyhnemail.com/streamer/stream/c7375358fc2ae2ec62f5fb70c6020e0e/index.m3u8
-#EXTINF:-1 tvg-id="abcabf0a8f56194903c0164d54674373" tvg-name="DR Ramasjang" tvg-chno="4" group-title="TV",DR Ramasjang
-https://lyhnemail.com/streamer/stream/abcabf0a8f56194903c0164d54674373/index.m3u8
-#EXTINF:-1 tvg-id="ac3d4b166d8e8eac06e0fad0271f331b" tvg-name="TV SYD+" tvg-chno="5" group-title="TV",TV SYD+
-https://lyhnemail.com/streamer/stream/ac3d4b166d8e8eac06e0fad0271f331b/index.m3u8
-#EXTINF:-1 tvg-id="1b4bf84069f8dd7c466b4293852aa7e7" tvg-name="TV3" tvg-chno="6" group-title="TV",TV3
-https://lyhnemail.com/streamer/stream/1b4bf84069f8dd7c466b4293852aa7e7/index.m3u8
-#EXTINF:-1 tvg-id="b42cb51ab4b6ce30774034c21beefcc1" tvg-name="TV3+ HD (DK)" tvg-chno="7" group-title="TV",TV3+ HD (DK)
-https://lyhnemail.com/streamer/stream/b42cb51ab4b6ce30774034c21beefcc1/index.m3u8
-#EXTINF:-1 tvg-id="df459a9fd1dcee01b5cbfb2384dbab6d" tvg-name="TV2 Charlie" tvg-chno="8" group-title="TV",TV2 Charlie
-https://lyhnemail.com/streamer/stream/df459a9fd1dcee01b5cbfb2384dbab6d/index.m3u8
-#EXTINF:-1 tvg-id="bb732f2ad151ba1ea0e4e12a26aade29" tvg-name="TV2 Echo" tvg-chno="9" group-title="TV",TV2 Echo
-https://lyhnemail.com/streamer/stream/bb732f2ad151ba1ea0e4e12a26aade29/index.m3u8
-#EXTINF:-1 tvg-id="a7c63bacfa0fd4dddaddaaa638c82178" tvg-name="dk4" tvg-chno="10" group-title="TV",dk4
-https://lyhnemail.com/streamer/stream/a7c63bacfa0fd4dddaddaaa638c82178/index.m3u8
-#EXTINF:-1 tvg-id="a87bd08b49cac5c5ddef5394c75e1ca3" tvg-name="Kanal 4" tvg-chno="11" group-title="TV",Kanal 4
-https://lyhnemail.com/streamer/stream/a87bd08b49cac5c5ddef5394c75e1ca3/index.m3u8
-#EXTINF:-1 tvg-id="9dc9ca1135e4eba31aa1056134e90002" tvg-name="Kanal 5" tvg-chno="12" group-title="TV",Kanal 5
-https://lyhnemail.com/streamer/stream/9dc9ca1135e4eba31aa1056134e90002/index.m3u8
-#EXTINF:-1 tvg-id="d55ccf1fdd71ff262b237ce26214175a" tvg-name="TV2 Fri" tvg-chno="13" group-title="TV",TV2 Fri
-https://lyhnemail.com/streamer/stream/d55ccf1fdd71ff262b237ce26214175a/index.m3u8
-#EXTINF:-1 tvg-id="e5656bed9c3618f2ec71fdbf339b1417" tvg-name="TV3 Puls" tvg-chno="14" group-title="TV",TV3 Puls
-https://lyhnemail.com/streamer/stream/e5656bed9c3618f2ec71fdbf339b1417/index.m3u8
-#EXTINF:-1 tvg-id="819602c3f422dc44d3e4b7a14585ae44" tvg-name="Kanal Syd" tvg-chno="15" group-title="TV",Kanal Syd
-https://lyhnemail.com/streamer/stream/819602c3f422dc44d3e4b7a14585ae44/index.m3u8
-#EXTINF:-1 tvg-id="5461582c905f803616c16e4d4d4c0a89" tvg-name="Folketinget" tvg-chno="16" group-title="TV",Folketinget
-https://lyhnemail.com/streamer/stream/5461582c905f803616c16e4d4d4c0a89/index.m3u8
-#EXTINF:-1 tvg-id="e295bbb044767c5525ef3f11cbb5d300" tvg-name="Prøvekanal" tvg-chno="17" group-title="TV",Prøvekanal
-https://lyhnemail.com/streamer/stream/e295bbb044767c5525ef3f11cbb5d300/index.m3u8
-#EXTINF:-1 tvg-id="e6fb27c3cebbf7216d6e23013c14cf00" tvg-name="Sky News" tvg-chno="18" group-title="TV",Sky News
-https://lyhnemail.com/streamer/stream/e6fb27c3cebbf7216d6e23013c14cf00/index.m3u8
-#EXTINF:-1 tvg-id="47f8c60196219f3ca8a03a90de020a6e" tvg-name="Eurosport 1" tvg-chno="19" group-title="TV",Eurosport 1
-https://lyhnemail.com/streamer/stream/47f8c60196219f3ca8a03a90de020a6e/index.m3u8
-#EXTINF:-1 tvg-id="06116dc290807158d7106fd39ddfb131" tvg-name="TV3 Sport" tvg-chno="20" group-title="TV",TV3 Sport
-https://lyhnemail.com/streamer/stream/06116dc290807158d7106fd39ddfb131/index.m3u8
-#EXTINF:-1 tvg-id="366fb3115a13f96af0a20b66772da7dd" tvg-name="TV3 MAX" tvg-chno="21" group-title="TV",TV3 MAX
-https://lyhnemail.com/streamer/stream/366fb3115a13f96af0a20b66772da7dd/index.m3u8
-#EXTINF:-1 tvg-id="8309d7570902decd9002dcb421dbf9fe" tvg-name="TV2 SPORT" tvg-chno="22" group-title="TV",TV2 SPORT
-https://lyhnemail.com/streamer/stream/8309d7570902decd9002dcb421dbf9fe/index.m3u8
-#EXTINF:-1 tvg-id="0920299e5dad4a4f04ac88c6d2a7b7da" tvg-name="Sport Live" tvg-chno="23" group-title="TV",Sport Live
-https://lyhnemail.com/streamer/stream/0920299e5dad4a4f04ac88c6d2a7b7da/index.m3u8
-#EXTINF:-1 tvg-id="dad839e44c435d0ae37395047ebb6194" tvg-name="Viasat Golf" tvg-chno="24" group-title="TV",Viasat Golf
-https://lyhnemail.com/streamer/stream/dad839e44c435d0ae37395047ebb6194/index.m3u8
-#EXTINF:-1 tvg-id="4c615bbd0be27430c82b64d46b545c50" tvg-name="TV2 SPORT X" tvg-chno="25" group-title="TV",TV2 SPORT X
-https://lyhnemail.com/streamer/stream/4c615bbd0be27430c82b64d46b545c50/index.m3u8
-#EXTINF:-1 tvg-id="e2e4d9641c77e5724d9da80315f693ad" tvg-name="V Sport Ultra" tvg-chno="26" group-title="TV",V Sport Ultra
-https://lyhnemail.com/streamer/stream/e2e4d9641c77e5724d9da80315f693ad/index.m3u8
-#EXTINF:-1 tvg-id="4a01525a920f34dc96dc20023a83ebbd" tvg-name="Deluxe Music" tvg-chno="27" group-title="TV",Deluxe Music
-https://lyhnemail.com/streamer/stream/4a01525a920f34dc96dc20023a83ebbd/index.m3u8
-#EXTINF:-1 tvg-id="baf78a0e74d6c527e2daf9837d31a925" tvg-name="Uptown Classic" tvg-chno="28" group-title="TV",Uptown Classic
-https://lyhnemail.com/streamer/stream/baf78a0e74d6c527e2daf9837d31a925/index.m3u8
-#EXTINF:-1 tvg-id="22faca2d269e984dfe8e9bb051601afd" tvg-name="MTV Nordic" tvg-chno="29" group-title="TV",MTV Nordic
-https://lyhnemail.com/streamer/stream/22faca2d269e984dfe8e9bb051601afd/index.m3u8
-#EXTINF:-1 tvg-id="9662ff0dac3064e39ae9677991ba1111" tvg-name="National Geographic ch." tvg-chno="30" group-title="TV",National Geographic ch.
-https://lyhnemail.com/streamer/stream/9662ff0dac3064e39ae9677991ba1111/index.m3u8
-#EXTINF:-1 tvg-id="67a95cc7be372168dec13a5171a1f87b" tvg-name="Viasat Explore" tvg-chno="31" group-title="TV",Viasat Explore
-https://lyhnemail.com/streamer/stream/67a95cc7be372168dec13a5171a1f87b/index.m3u8
-#EXTINF:-1 tvg-id="cbc47282900048f0e2fa8b919fd84edf" tvg-name="Discovery Channel" tvg-chno="32" group-title="TV",Discovery Channel
-https://lyhnemail.com/streamer/stream/cbc47282900048f0e2fa8b919fd84edf/index.m3u8
-#EXTINF:-1 tvg-id="b7d547ddf63128698aeec2afc07a4d6f" tvg-name="Animal Planet" tvg-chno="33" group-title="TV",Animal Planet
-https://lyhnemail.com/streamer/stream/b7d547ddf63128698aeec2afc07a4d6f/index.m3u8
-#EXTINF:-1 tvg-id="18598022af990936db67ba34d37f462b" tvg-name="Viasat History" tvg-chno="34" group-title="TV",Viasat History
-https://lyhnemail.com/streamer/stream/18598022af990936db67ba34d37f462b/index.m3u8
-#EXTINF:-1 tvg-id="107082a3b89ab12906785cea64dd853e" tvg-name="Investigation Discovery" tvg-chno="35" group-title="TV",Investigation Discovery
-https://lyhnemail.com/streamer/stream/107082a3b89ab12906785cea64dd853e/index.m3u8
-#EXTINF:-1 tvg-id="453dd30fe6d8c019829064cb158a90b5" tvg-name="Nickelodeon" tvg-chno="36" group-title="TV",Nickelodeon
-https://lyhnemail.com/streamer/stream/453dd30fe6d8c019829064cb158a90b5/index.m3u8
-#EXTINF:-1 tvg-id="45cd97bdc2868089052bec341afc8448" tvg-name="Disney Channel" tvg-chno="37" group-title="TV",Disney Channel
-https://lyhnemail.com/streamer/stream/45cd97bdc2868089052bec341afc8448/index.m3u8
-#EXTINF:-1 tvg-id="d61afc02623fabc7994a5b7a6694396d" tvg-name="Nick JR" tvg-chno="38" group-title="TV",Nick JR
-https://lyhnemail.com/streamer/stream/d61afc02623fabc7994a5b7a6694396d/index.m3u8
-#EXTINF:-1 tvg-id="9dc28592989411a81ff13b868ae53d57" tvg-name="Das Erste" tvg-chno="39" group-title="TV",Das Erste
-https://lyhnemail.com/streamer/stream/9dc28592989411a81ff13b868ae53d57/index.m3u8
-#EXTINF:-1 tvg-id="8eba97989ba2ed48a331fe0c489cd28c" tvg-name="ZDF" tvg-chno="40" group-title="TV",ZDF
-https://lyhnemail.com/streamer/stream/8eba97989ba2ed48a331fe0c489cd28c/index.m3u8
-#EXTINF:-1 tvg-id="1231386820ef08171237d0de2835fda8" tvg-name="NDR" tvg-chno="41" group-title="TV",NDR
-https://lyhnemail.com/streamer/stream/1231386820ef08171237d0de2835fda8/index.m3u8
-#EXTINF:-1 tvg-id="50a3053843a7c19ac88bf2fa5c3b367e" tvg-name="SAT.1" tvg-chno="42" group-title="TV",SAT.1
-https://lyhnemail.com/streamer/stream/50a3053843a7c19ac88bf2fa5c3b367e/index.m3u8
-#EXTINF:-1 tvg-id="aa038faaa690edb9c161bbf11f6f810c" tvg-name="ProSieben" tvg-chno="43" group-title="TV",ProSieben
-https://lyhnemail.com/streamer/stream/aa038faaa690edb9c161bbf11f6f810c/index.m3u8
-#EXTINF:-1 tvg-id="40733138d830f6fb7c47291ecd362ea4" tvg-name="3sat" tvg-chno="44" group-title="TV",3sat
-https://lyhnemail.com/streamer/stream/40733138d830f6fb7c47291ecd362ea4/index.m3u8
-#EXTINF:-1 tvg-id="14c7b852d6c8da4a99ead11122ef08df" tvg-name="SVT1" tvg-chno="45" group-title="TV",SVT1
-https://lyhnemail.com/streamer/stream/14c7b852d6c8da4a99ead11122ef08df/index.m3u8
-#EXTINF:-1 tvg-id="34c8de59d4a07212d616ede248d3afd6" tvg-name="SVT2" tvg-chno="46" group-title="TV",SVT2
-https://lyhnemail.com/streamer/stream/34c8de59d4a07212d616ede248d3afd6/index.m3u8
-#EXTINF:-1 tvg-id="09137e895038e981d5c0f52795a1e953" tvg-name="TV4 SE" tvg-chno="47" group-title="TV",TV4 SE
-https://lyhnemail.com/streamer/stream/09137e895038e981d5c0f52795a1e953/index.m3u8
-#EXTINF:-1 tvg-id="0156941a6a8ae9953b05c5170f8217aa" tvg-name="NRK1" tvg-chno="48" group-title="TV",NRK1
-https://lyhnemail.com/streamer/stream/0156941a6a8ae9953b05c5170f8217aa/index.m3u8
-#EXTINF:-1 tvg-id="2c89d85f5d6d13cedf58f39b325f31be" tvg-name="TV5 Monde" tvg-chno="49" group-title="TV",TV5 Monde
-https://lyhnemail.com/streamer/stream/2c89d85f5d6d13cedf58f39b325f31be/index.m3u8
-#EXTINF:-1 tvg-id="4276f1be48e51dcdc78c2c410aa02d81" tvg-name="Viaplay Sport News" tvg-chno="50" group-title="TV",Viaplay Sport News
-https://lyhnemail.com/streamer/stream/4276f1be48e51dcdc78c2c410aa02d81/index.m3u8
+#EXTINF:-1 tvg-id="e105673be53ba26a2e0c02e94bdca82e" tvg-name="DR1" tvg-chno="1" group-title="TV",DR1
+https://lyhnemail.com/stream/e105673be53ba26a2e0c02e94bdca82e/index.m3u8
+#EXTINF:-1 tvg-id="c3af9a451e0a6e1bdcf5dde5bb3b8310" tvg-name="DR2" tvg-chno="2" group-title="TV",DR2
+https://lyhnemail.com/stream/c3af9a451e0a6e1bdcf5dde5bb3b8310/index.m3u8
+#EXTINF:-1 tvg-id="f1d2f359e296256d35cb5db82cf59e94" tvg-name="TV2 Syd" tvg-chno="3" group-title="TV",TV2 Syd
+https://lyhnemail.com/stream/f1d2f359e296256d35cb5db82cf59e94/index.m3u8
+#EXTINF:-1 tvg-id="698d0eac65a269d6776be806a6362ed3" tvg-name="TV3" tvg-chno="4" group-title="TV",TV3
+https://lyhnemail.com/stream/698d0eac65a269d6776be806a6362ed3/index.m3u8
+#EXTINF:-1 tvg-id="64f0b903452ac0e22ee938dfa05b730d" tvg-name="Ramasjang" tvg-chno="5" group-title="TV",Ramasjang
+https://lyhnemail.com/stream/64f0b903452ac0e22ee938dfa05b730d/index.m3u8
+#EXTINF:-1 tvg-id="43bad07148f49837c7ed07c298dbeec9" tvg-name="Kanal 5" tvg-chno="6" group-title="TV",Kanal 5
+https://lyhnemail.com/stream/43bad07148f49837c7ed07c298dbeec9/index.m3u8
+#EXTINF:-1 tvg-id="7197e54cad91921c564056ee7da547fb" tvg-name="TV SYD+" tvg-chno="7" group-title="TV",TV SYD+
+https://lyhnemail.com/stream/7197e54cad91921c564056ee7da547fb/index.m3u8
+#EXTINF:-1 tvg-id="cdc81561bb8f98c0c736c5c9254fb97a" tvg-name="TV3+ HD (DK)" tvg-chno="8" group-title="TV",TV3+ HD (DK)
+https://lyhnemail.com/stream/cdc81561bb8f98c0c736c5c9254fb97a/index.m3u8
+#EXTINF:-1 tvg-id="093841cc101eff7a541718181b0b4f9d" tvg-name="TV2 Charlie" tvg-chno="9" group-title="TV",TV2 Charlie
+https://lyhnemail.com/stream/093841cc101eff7a541718181b0b4f9d/index.m3u8
+#EXTINF:-1 tvg-id="5229fd6ce91ec1fd61a9e42f929c769e" tvg-name="TV2 Echo" tvg-chno="10" group-title="TV",TV2 Echo
+https://lyhnemail.com/stream/5229fd6ce91ec1fd61a9e42f929c769e/index.m3u8
+#EXTINF:-1 tvg-id="def0177801da232a7fee72f9b99428ca" tvg-name="dk4" tvg-chno="11" group-title="TV",dk4
+https://lyhnemail.com/stream/def0177801da232a7fee72f9b99428ca/index.m3u8
+#EXTINF:-1 tvg-id="66c3658c3c05402ce5eec8f96308e554" tvg-name="Kanal 4" tvg-chno="12" group-title="TV",Kanal 4
+https://lyhnemail.com/stream/66c3658c3c05402ce5eec8f96308e554/index.m3u8
+#EXTINF:-1 tvg-id="94ea276498b60ced0ee40a45398c170e" tvg-name="TV2 Fri" tvg-chno="13" group-title="TV",TV2 Fri
+https://lyhnemail.com/stream/94ea276498b60ced0ee40a45398c170e/index.m3u8
+#EXTINF:-1 tvg-id="a178e132bb9bbbe957e16fa3bd7402d9" tvg-name="TV3 Puls" tvg-chno="14" group-title="TV",TV3 Puls
+https://lyhnemail.com/stream/a178e132bb9bbbe957e16fa3bd7402d9/index.m3u8
+#EXTINF:-1 tvg-id="66e3db96a673ff029f322208eaf38557" tvg-name="Kanal Syd" tvg-chno="15" group-title="TV",Kanal Syd
+https://lyhnemail.com/stream/66e3db96a673ff029f322208eaf38557/index.m3u8
+#EXTINF:-1 tvg-id="234874f74d729b1ec54516fee61eeee9" tvg-name="Folketinget" tvg-chno="16" group-title="TV",Folketinget
+https://lyhnemail.com/stream/234874f74d729b1ec54516fee61eeee9/index.m3u8
+#EXTINF:-1 tvg-id="69eb95b50acac2ecca20558fdfa4d87e" tvg-name="Prøvekanal" tvg-chno="17" group-title="TV",Prøvekanal
+https://lyhnemail.com/stream/69eb95b50acac2ecca20558fdfa4d87e/index.m3u8
+#EXTINF:-1 tvg-id="09540762c633e5eb2ba9aba71c2783ac" tvg-name="TV2 News" tvg-chno="18" group-title="TV",TV2 News
+https://lyhnemail.com/stream/09540762c633e5eb2ba9aba71c2783ac/index.m3u8
+#EXTINF:-1 tvg-id="6f419d3359de3381512f384bfdae58c3" tvg-name="Sky News" tvg-chno="19" group-title="TV",Sky News
+https://lyhnemail.com/stream/6f419d3359de3381512f384bfdae58c3/index.m3u8
+#EXTINF:-1 tvg-id="342ab9fa3ca98f5d29a260f7da54b511" tvg-name="See" tvg-chno="20" group-title="TV",See
+https://lyhnemail.com/stream/342ab9fa3ca98f5d29a260f7da54b511/index.m3u8
+#EXTINF:-1 tvg-id="d26e8118839592453c2cd4d19202c6d7" tvg-name="TV3 Sport" tvg-chno="21" group-title="TV",TV3 Sport
+https://lyhnemail.com/stream/d26e8118839592453c2cd4d19202c6d7/index.m3u8
+#EXTINF:-1 tvg-id="e09c7675aebf7c54e7e55a306e8fd301" tvg-name="Eurosport 1" tvg-chno="22" group-title="TV",Eurosport 1
+https://lyhnemail.com/stream/e09c7675aebf7c54e7e55a306e8fd301/index.m3u8
+#EXTINF:-1 tvg-id="fbf36aa2a0a1387380f542819c894778" tvg-name="TV3 MAX" tvg-chno="23" group-title="TV",TV3 MAX
+https://lyhnemail.com/stream/fbf36aa2a0a1387380f542819c894778/index.m3u8
+#EXTINF:-1 tvg-id="e98a3a1f91fa736979105f1b6755525f" tvg-name="TV2 SPORT" tvg-chno="24" group-title="TV",TV2 SPORT
+https://lyhnemail.com/stream/e98a3a1f91fa736979105f1b6755525f/index.m3u8
+#EXTINF:-1 tvg-id="482223c265154ff95c0ab1aa117e23f7" tvg-name="Sport Live" tvg-chno="25" group-title="TV",Sport Live
+https://lyhnemail.com/stream/482223c265154ff95c0ab1aa117e23f7/index.m3u8
+#EXTINF:-1 tvg-id="3f030bf44d465beb08a486051eba3908" tvg-name="V Sport Golf" tvg-chno="26" group-title="TV",V Sport Golf
+https://lyhnemail.com/stream/3f030bf44d465beb08a486051eba3908/index.m3u8
+#EXTINF:-1 tvg-id="11b4ec53e7b49ee90a80b6094d069702" tvg-name="TV2 SPORT X" tvg-chno="27" group-title="TV",TV2 SPORT X
+https://lyhnemail.com/stream/11b4ec53e7b49ee90a80b6094d069702/index.m3u8
+#EXTINF:-1 tvg-id="45e829c70b049e88370f0c0ae16d22f4" tvg-name="V Sport Ultra" tvg-chno="28" group-title="TV",V Sport Ultra
+https://lyhnemail.com/stream/45e829c70b049e88370f0c0ae16d22f4/index.m3u8
+#EXTINF:-1 tvg-id="174051fda4f0bb801aab8a5ca969dfab" tvg-name="Viaplay Sport News" tvg-chno="29" group-title="TV",Viaplay Sport News
+https://lyhnemail.com/stream/174051fda4f0bb801aab8a5ca969dfab/index.m3u8
+#EXTINF:-1 tvg-id="73dda14cb5bd61bb1f954775bf1cd622" tvg-name="Deluxe Music" tvg-chno="30" group-title="TV",Deluxe Music
+https://lyhnemail.com/stream/73dda14cb5bd61bb1f954775bf1cd622/index.m3u8
+#EXTINF:-1 tvg-id="064c74d71d8f9f59e079af2da0521567" tvg-name="Uptown Classic" tvg-chno="31" group-title="TV",Uptown Classic
+https://lyhnemail.com/stream/064c74d71d8f9f59e079af2da0521567/index.m3u8
+#EXTINF:-1 tvg-id="1bed38eeae2872c0c2e0b0b24374bcdd" tvg-name="MTV Nordic" tvg-chno="32" group-title="TV",MTV Nordic
+https://lyhnemail.com/stream/1bed38eeae2872c0c2e0b0b24374bcdd/index.m3u8
+#EXTINF:-1 tvg-id="05e02364b6df9dec57a4ea98d9f76156" tvg-name="National Geographic ch." tvg-chno="33" group-title="TV",National Geographic ch.
+https://lyhnemail.com/stream/05e02364b6df9dec57a4ea98d9f76156/index.m3u8
+#EXTINF:-1 tvg-id="1c94fbc480ba87018b198ffbb290a3e0" tvg-name="Viasat Explore" tvg-chno="34" group-title="TV",Viasat Explore
+https://lyhnemail.com/stream/1c94fbc480ba87018b198ffbb290a3e0/index.m3u8
+#EXTINF:-1 tvg-id="870c3b7950d122d7e11fe6c56f00e778" tvg-name="Discovery Channel" tvg-chno="35" group-title="TV",Discovery Channel
+https://lyhnemail.com/stream/870c3b7950d122d7e11fe6c56f00e778/index.m3u8
+#EXTINF:-1 tvg-id="d255b94cbb4066e8aa81b0e9114d9e82" tvg-name="Animal Planet" tvg-chno="36" group-title="TV",Animal Planet
+https://lyhnemail.com/stream/d255b94cbb4066e8aa81b0e9114d9e82/index.m3u8
+#EXTINF:-1 tvg-id="8d12046f009a167585e19ecf01a7d061" tvg-name="Viasat History" tvg-chno="37" group-title="TV",Viasat History
+https://lyhnemail.com/stream/8d12046f009a167585e19ecf01a7d061/index.m3u8
+#EXTINF:-1 tvg-id="c367014ce68652fbd79f38990bb7d793" tvg-name="Viasat Nature" tvg-chno="38" group-title="TV",Viasat Nature
+https://lyhnemail.com/stream/c367014ce68652fbd79f38990bb7d793/index.m3u8
+#EXTINF:-1 tvg-id="a02f0037c79737cee1e5f60f832bce00" tvg-name="ID Investigation Discovery" tvg-chno="39" group-title="TV",ID Investigation Discovery
+https://lyhnemail.com/stream/a02f0037c79737cee1e5f60f832bce00/index.m3u8
+#EXTINF:-1 tvg-id="10f62b151f6572ba3c766f9588d1bf77" tvg-name="Nickelodeon" tvg-chno="40" group-title="TV",Nickelodeon
+https://lyhnemail.com/stream/10f62b151f6572ba3c766f9588d1bf77/index.m3u8
+#EXTINF:-1 tvg-id="7ce642754fd4ab580de785d77c481961" tvg-name="Disney Channel" tvg-chno="41" group-title="TV",Disney Channel
+https://lyhnemail.com/stream/7ce642754fd4ab580de785d77c481961/index.m3u8
+#EXTINF:-1 tvg-id="a750284c69885ad49b5ad7c70cd48632" tvg-name="Nick JR" tvg-chno="42" group-title="TV",Nick JR
+https://lyhnemail.com/stream/a750284c69885ad49b5ad7c70cd48632/index.m3u8
+#EXTINF:-1 tvg-id="1c691af3bea969b4df408d7941befa4d" tvg-name="Das Erste" tvg-chno="43" group-title="TV",Das Erste
+https://lyhnemail.com/stream/1c691af3bea969b4df408d7941befa4d/index.m3u8
+#EXTINF:-1 tvg-id="d35c0b51e77188f2602067c8680d245b" tvg-name="ZDF" tvg-chno="44" group-title="TV",ZDF
+https://lyhnemail.com/stream/d35c0b51e77188f2602067c8680d245b/index.m3u8
+#EXTINF:-1 tvg-id="1a762e68e1b454ae6bc57cde7d7102fb" tvg-name="NDR" tvg-chno="45" group-title="TV",NDR
+https://lyhnemail.com/stream/1a762e68e1b454ae6bc57cde7d7102fb/index.m3u8
+#EXTINF:-1 tvg-id="dd44e6c3c7d04f7f27bf74e40f1e3aeb" tvg-name="RTL" tvg-chno="46" group-title="TV",RTL
+https://lyhnemail.com/stream/dd44e6c3c7d04f7f27bf74e40f1e3aeb/index.m3u8
+#EXTINF:-1 tvg-id="c3a746d83a6c42fac459b2650d868670" tvg-name="SAT.1" tvg-chno="47" group-title="TV",SAT.1
+https://lyhnemail.com/stream/c3a746d83a6c42fac459b2650d868670/index.m3u8
+#EXTINF:-1 tvg-id="ddd3520d8955de6e885f240e77600c8f" tvg-name="ProSieben" tvg-chno="48" group-title="TV",ProSieben
+https://lyhnemail.com/stream/ddd3520d8955de6e885f240e77600c8f/index.m3u8
+#EXTINF:-1 tvg-id="fd4211fbb19d414d1752def74584a999" tvg-name="3sat" tvg-chno="49" group-title="TV",3sat
+https://lyhnemail.com/stream/fd4211fbb19d414d1752def74584a999/index.m3u8
+#EXTINF:-1 tvg-id="6cc7c20505d0b9f13b3c850fd0f10a78" tvg-name="SVT1" tvg-chno="50" group-title="TV",SVT1
+https://lyhnemail.com/stream/6cc7c20505d0b9f13b3c850fd0f10a78/index.m3u8
+#EXTINF:-1 tvg-id="c35a7a2bba14702e708625bd3563c247" tvg-name="SVT2" tvg-chno="51" group-title="TV",SVT2
+https://lyhnemail.com/stream/c35a7a2bba14702e708625bd3563c247/index.m3u8
+#EXTINF:-1 tvg-id="addf1f24dd587530a71b075b49ba354b" tvg-name="TV4 SE" tvg-chno="52" group-title="TV",TV4 SE
+https://lyhnemail.com/stream/addf1f24dd587530a71b075b49ba354b/index.m3u8
+#EXTINF:-1 tvg-id="d4e4afce3910d0993168bb4060656504" tvg-name="NRK1" tvg-chno="53" group-title="TV",NRK1
+https://lyhnemail.com/stream/d4e4afce3910d0993168bb4060656504/index.m3u8
+#EXTINF:-1 tvg-id="5089d0fb9029311ea29261d180961c53" tvg-name="TV5 Monde" tvg-chno="54" group-title="TV",TV5 Monde
+https://lyhnemail.com/stream/5089d0fb9029311ea29261d180961c53/index.m3u8

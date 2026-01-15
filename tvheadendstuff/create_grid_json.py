@@ -7,9 +7,9 @@ from urllib.parse import urljoin
 
 
 TVH_URL="http://hts:hts@kodi.lyhnemail.com:19981"
-API_URL = f"{TVH_URL}/api/channel/grid"
+API_URL = f"{TVH_URL}/api/channel/grid?limit=999"
 PlayURL = f"{TVH_URL}/play/ticket/stream/channel/{{uuid}}"
-BaseURL = "https://lyhnemail.com/streamer/"
+BaseURL = "https://stream.lyhnemail.com/"
 
 def create_url(uuid):
     return PlayURL.format(uuid=uuid)

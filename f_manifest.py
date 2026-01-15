@@ -1,26 +1,22 @@
-from fastapi import FastAPI, Query, Request, HTTPException, Depends
-from fastapi.responses import FileResponse
-import xml.etree.ElementTree as ET
-from fastapi import HTTPException, Response
+from fastapi import FastAPI, Query, Request, HTTPException, Depends, Response
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, StreamingResponse
+from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+import xml.etree.ElementTree as ET
 import shutil
 import subprocess
 import os
 import time
 import threading
 from contextlib import asynccontextmanager
-from fastapi import Request
 from dotenv import load_dotenv
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import JSONResponse
 import logging
 import uvicorn
 from collections import deque
 import json
 import jwt
-from fastapi.responses import HTMLResponse, JSONResponse, StreamingResponse
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
+
 import httpx
 from urllib.parse import urljoin
 
@@ -124,7 +120,7 @@ async def lifespan(app):
     logging.info("Application shutting down")
 
 # app definition
-app = FastAPI(root_path="/streamer", lifespan=lifespan)
+app = FastAPI(lifespan=lifespan)
 
 # middleware for CORS
 app.add_middleware(
@@ -144,7 +140,7 @@ JWT_ALG = "HS256"
 HLS_TOKEN_TTL = 120  # seconds
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
-app.mount("/castjs", StaticFiles(directory="../castjs"), name="castjs")
+app.mount("/caster", StaticFiles(directory="static/castjs", html=True), name="castjs")
 app.mount("/images", StaticFiles(directory="images"), name="images")
 templates = Jinja2Templates(directory="templates")
 
@@ -591,7 +587,7 @@ def is_segment_file(filename: str) -> bool:
     return filename.endswith((".ts", ".m4s"))  # HLS TS or DASH/fMP4
 
 def PlaylistURL(uuid):
-    return urljoin(baseURL, f"streamer/stream/{uuid}")
+    return urljoin(baseURL, f"stream/{uuid}")
 
 
 def monitor_inactivity(timeout=InactivityTimeOut):

@@ -1,0 +1,11 @@
+services:
+  mpd-streamer:
+    build: .
+    container_name: mpd-streamer
+    restart: always
+    ports:
+      - "${UVICORN_PORT:-5000}:${UVICORN_PORT:-5000}"  # maps host port to container port
+    env_file:
+      - .env          # user-provided .env file mounted for environment variables
+    volumes:
+      - ./static:/app/static:ro   # optional, read-only mount if you want to update static files without rebuilding

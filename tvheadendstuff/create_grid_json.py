@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 
 
 TVH_URL="http://hts:hts@kodi.lyhnemail.com:19981"
-API_URL = f"{TVH_URL}/api/channel/grid?limit=999"
+API_URL = f"{TVH_URL}/api/channel/grid?limit=999"   #default limit is 50. Set high limit to get all channels
 PlayURL = f"{TVH_URL}/play/ticket/stream/channel/{{uuid}}"
 BaseURL = "https://stream.lyhnemail.com/"
 

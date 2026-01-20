@@ -141,7 +141,7 @@ HLS_TOKEN_TTL = 120  # seconds
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 app.mount("/caster", StaticFiles(directory="static/castjs", html=True), name="castjs")
-app.mount("/images", StaticFiles(directory="images"), name="images")
+app.mount("/images", StaticFiles(directory="static/images"), name="images")
 templates = Jinja2Templates(directory="templates")
 
 # ---- Fake session dependency (replace with real one) ----

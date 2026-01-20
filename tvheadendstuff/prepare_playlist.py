@@ -7,21 +7,23 @@ import sys
 from pathlib import Path
 
 
-# 1. Get the parent folder of the current file
+# Get the parent folder of the current file
 parent_folder = Path(__file__).resolve().parent.parent
-
-# 2. Load .env from parent folder
+# Get the folder of this file
+base_folder = Path(__file__).resolve().parent
+# Load .env from parent folder
 load_dotenv(dotenv_path=parent_folder / ".env")
 
-# 3. Read environment variables
+
+# Read environment variables
 EPG_URL = os.getenv("XMLTV")
-OUTPUT = "../streamer.m3u"
+OUTPUT = parent_folder / "streamer.m3u"
 STREAM_BASE =  os.getenv("baseURL") 
 
 
 
 
-# 4. Load channels.json
+# Load channels.json
 def load_channelsjson(jsonpath: Path, channels: json):
     CHANNELS_FILE = jsonpath
     try:
@@ -59,7 +61,7 @@ def select_stream_format():
 def generate_playlist():
     segment_index = select_stream_format()
 
-    JSONPath = Path("channels.json")
+    JSONPath = base_folder / "channels.json"
     CHANNELS = []
 
 
